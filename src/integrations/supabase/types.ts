@@ -134,30 +134,36 @@ export type Database = {
       }
       companies: {
         Row: {
+          cnpj: string | null
           contact_email: string | null
           created_at: string
           id: string
           is_active: boolean
+          legal_name: string | null
           logo_url: string | null
           name: string
           slug: string
           updated_at: string
         }
         Insert: {
+          cnpj?: string | null
           contact_email?: string | null
           created_at?: string
           id?: string
           is_active?: boolean
+          legal_name?: string | null
           logo_url?: string | null
           name: string
           slug: string
           updated_at?: string
         }
         Update: {
+          cnpj?: string | null
           contact_email?: string | null
           created_at?: string
           id?: string
           is_active?: boolean
+          legal_name?: string | null
           logo_url?: string | null
           name?: string
           slug?: string
@@ -168,7 +174,8 @@ export type Database = {
       indicators: {
         Row: {
           code: string
-          company_id: string
+          company_id: string | null
+          cpf: string | null
           created_at: string
           email: string | null
           full_name: string
@@ -180,7 +187,8 @@ export type Database = {
         }
         Insert: {
           code?: string
-          company_id: string
+          company_id?: string | null
+          cpf?: string | null
           created_at?: string
           email?: string | null
           full_name: string
@@ -192,7 +200,8 @@ export type Database = {
         }
         Update: {
           code?: string
-          company_id?: string
+          company_id?: string | null
+          cpf?: string | null
           created_at?: string
           email?: string | null
           full_name?: string
@@ -416,6 +425,8 @@ export type Database = {
       }
       is_my_indicator: { Args: { _indicator_id: string }; Returns: boolean }
       is_super_admin: { Args: never; Returns: boolean }
+      slugify: { Args: { _value: string }; Returns: string }
+      unaccent_fallback: { Args: { _value: string }; Returns: string }
     }
     Enums: {
       app_role: "super_admin" | "company_admin" | "indicator"
