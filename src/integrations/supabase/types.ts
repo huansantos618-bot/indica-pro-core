@@ -14,6 +14,53 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_logs: {
+        Row: {
+          action: string
+          company_id: string | null
+          created_at: string
+          details: string | null
+          entity: string | null
+          entity_id: string | null
+          id: string
+          ip_address: string | null
+          user_email: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          company_id?: string | null
+          created_at?: string
+          details?: string | null
+          entity?: string | null
+          entity_id?: string | null
+          id?: string
+          ip_address?: string | null
+          user_email?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          company_id?: string | null
+          created_at?: string
+          details?: string | null
+          entity?: string | null
+          entity_id?: string | null
+          id?: string
+          ip_address?: string | null
+          user_email?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "audit_logs_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       campaigns: {
         Row: {
           commission_type: Database["public"]["Enums"]["commission_type"]
@@ -148,6 +195,7 @@ export type Database = {
           legal_name: string | null
           logo_url: string | null
           name: string
+          plan: Database["public"]["Enums"]["subscription_plan"]
           slug: string
           updated_at: string
         }
@@ -160,6 +208,7 @@ export type Database = {
           legal_name?: string | null
           logo_url?: string | null
           name: string
+          plan?: Database["public"]["Enums"]["subscription_plan"]
           slug: string
           updated_at?: string
         }
@@ -172,6 +221,7 @@ export type Database = {
           legal_name?: string | null
           logo_url?: string | null
           name?: string
+          plan?: Database["public"]["Enums"]["subscription_plan"]
           slug?: string
           updated_at?: string
         }
@@ -433,6 +483,16 @@ export type Database = {
       is_super_admin: { Args: never; Returns: boolean }
       slugify: { Args: { _value: string }; Returns: string }
       unaccent_fallback: { Args: { _value: string }; Returns: string }
+      write_audit_log: {
+        Args: {
+          _action: string
+          _company_id: string
+          _details: string
+          _entity: string
+          _entity_id: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "super_admin" | "company_admin" | "indicator"
@@ -446,6 +506,7 @@ export type Database = {
         | "negotiation"
         | "won"
         | "lost"
+      subscription_plan: "free" | "pro" | "enterprise"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -585,6 +646,7 @@ export const Constants = {
         "won",
         "lost",
       ],
+      subscription_plan: ["free", "pro", "enterprise"],
     },
   },
 } as const
