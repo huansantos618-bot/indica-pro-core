@@ -27,6 +27,7 @@ import { Route as AuthenticatedCompanySettingsRouteImport } from './routes/_auth
 import { Route as AuthenticatedIndicatorDashboardRouteImport } from './routes/_authenticated/indicator.dashboard'
 import { Route as AuthenticatedIndicatorExploreRouteImport } from './routes/_authenticated/indicator.explore'
 import { Route as AuthenticatedIndicatorLeadsRouteImport } from './routes/_authenticated/indicator.leads'
+import { Route as AuthenticatedIndicatorWalletRouteImport } from './routes/_authenticated/indicator.wallet'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -126,6 +127,12 @@ const AuthenticatedIndicatorLeadsRoute =
     path: '/leads',
     getParentRoute: () => AuthenticatedIndicatorRoute,
   } as any)
+const AuthenticatedIndicatorWalletRoute =
+  AuthenticatedIndicatorWalletRouteImport.update({
+    id: '/wallet',
+    path: '/wallet',
+    getParentRoute: () => AuthenticatedIndicatorRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -145,6 +152,7 @@ export interface FileRoutesByFullPath {
   '/indicator/dashboard': typeof AuthenticatedIndicatorDashboardRoute
   '/indicator/explore': typeof AuthenticatedIndicatorExploreRoute
   '/indicator/leads': typeof AuthenticatedIndicatorLeadsRoute
+  '/indicator/wallet': typeof AuthenticatedIndicatorWalletRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -164,6 +172,7 @@ export interface FileRoutesByTo {
   '/indicator/dashboard': typeof AuthenticatedIndicatorDashboardRoute
   '/indicator/explore': typeof AuthenticatedIndicatorExploreRoute
   '/indicator/leads': typeof AuthenticatedIndicatorLeadsRoute
+  '/indicator/wallet': typeof AuthenticatedIndicatorWalletRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -185,6 +194,7 @@ export interface FileRoutesById {
   '/_authenticated/indicator/dashboard': typeof AuthenticatedIndicatorDashboardRoute
   '/_authenticated/indicator/explore': typeof AuthenticatedIndicatorExploreRoute
   '/_authenticated/indicator/leads': typeof AuthenticatedIndicatorLeadsRoute
+  '/_authenticated/indicator/wallet': typeof AuthenticatedIndicatorWalletRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -206,6 +216,7 @@ export interface FileRouteTypes {
     | '/indicator/dashboard'
     | '/indicator/explore'
     | '/indicator/leads'
+    | '/indicator/wallet'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -225,6 +236,7 @@ export interface FileRouteTypes {
     | '/indicator/dashboard'
     | '/indicator/explore'
     | '/indicator/leads'
+    | '/indicator/wallet'
   id:
     | '__root__'
     | '/'
@@ -245,6 +257,7 @@ export interface FileRouteTypes {
     | '/_authenticated/indicator/dashboard'
     | '/_authenticated/indicator/explore'
     | '/_authenticated/indicator/leads'
+    | '/_authenticated/indicator/wallet'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -382,6 +395,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedIndicatorLeadsRouteImport
       parentRoute: typeof AuthenticatedIndicatorRoute
     }
+    '/_authenticated/indicator/wallet': {
+      id: '/_authenticated/indicator/wallet'
+      path: '/wallet'
+      fullPath: '/indicator/wallet'
+      preLoaderRoute: typeof AuthenticatedIndicatorWalletRouteImport
+      parentRoute: typeof AuthenticatedIndicatorRoute
+    }
   }
 }
 
@@ -408,6 +428,7 @@ interface AuthenticatedIndicatorRouteChildren {
   AuthenticatedIndicatorDashboardRoute: typeof AuthenticatedIndicatorDashboardRoute
   AuthenticatedIndicatorExploreRoute: typeof AuthenticatedIndicatorExploreRoute
   AuthenticatedIndicatorLeadsRoute: typeof AuthenticatedIndicatorLeadsRoute
+  AuthenticatedIndicatorWalletRoute: typeof AuthenticatedIndicatorWalletRoute
 }
 
 const AuthenticatedIndicatorRouteChildren: AuthenticatedIndicatorRouteChildren =
@@ -415,6 +436,7 @@ const AuthenticatedIndicatorRouteChildren: AuthenticatedIndicatorRouteChildren =
     AuthenticatedIndicatorDashboardRoute: AuthenticatedIndicatorDashboardRoute,
     AuthenticatedIndicatorExploreRoute: AuthenticatedIndicatorExploreRoute,
     AuthenticatedIndicatorLeadsRoute: AuthenticatedIndicatorLeadsRoute,
+    AuthenticatedIndicatorWalletRoute: AuthenticatedIndicatorWalletRoute,
   }
 
 const AuthenticatedIndicatorRouteWithChildren =
