@@ -1,11 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { Building2, LogOut } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Megaphone, Users, Wallet, TrendingUp } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
-import { signOut } from "@/lib/auth";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "@tanstack/react-router";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  COMPANY_LEAD_PHASES,
+  LEAD_PHASE_LABELS,
+  formatBRL,
+  toPhase,
+} from "@/lib/company";
+import type { LeadStatus } from "@/types/database";
 
 export const Route = createFileRoute("/_authenticated/company/dashboard")({
   head: () => ({
@@ -25,48 +30,80 @@ export const Route = createFileRoute("/_authenticated/company/dashboard")({
   component: CompanyDashboard,
 });
 
-function CompanyDashboard() {
-  const navigate = useNavigate();
-  const [companyName, setCompanyName] = useState<string | null>(null);
+async function fetchOverview() {
+  const [campaigns, leads, commissions] = await Promise.all([
+    supabase.from("campaigns").select("id,status"),
+    supabase.from("leads").select("id,status,deal_value"),
+    supabase.from("commissions").select("amount,status"),
+  ]);
 
-  useEffect(() => {
-    let active = true;
-    (async () => {
-      const { data } = await supabase.from("companies").select("name").limit(1).maybeSingle();
-      if (active) setCompanyName(data?.name ?? null);
-    })();
-    return () => {
-      active = false;
-    };
-  }, []);
+  const leadRows = leads.data ?? [];
+  const byPhase = COMPANY_LEAD_PHASES.map((phase) => ({
+    phase,
+    count: leadRows.filter((l) => toPhase(l.status as LeadStatus) === phase).length,
+  }));
+
+  return {
+    activeCampaigns: (campaigns.data ?? []).filter((c) => c.status === "active").length,
+    totalLeads: leadRows.length,
+    wonValue: leadRows
+      .filter((l) => l.status === "won")
+      .reduce((sum, l) => sum + Number(l.deal_value ?? 0), 0),
+    pendingCommissions: (commissions.data ?? [])
+      .filter((c) => c.status !== "paid" && c.status !== "cancelled")
+      .reduce((sum, c) => sum + Number(c.amount ?? 0), 0),
+    byPhase,
+  };
+}
+
+function CompanyDashboard() {
+  const { data } = useQuery({ queryKey: ["company-overview"], queryFn: fetchOverview });
+
+  const cards = [
+    { label: "Campanhas ativas", value: String(data?.activeCampaigns ?? 0), icon: Megaphone },
+    { label: "Leads recebidos", value: String(data?.totalLeads ?? 0), icon: Users },
+    { label: "Vendas validadas", value: formatBRL(data?.wonValue), icon: TrendingUp },
+    { label: "Comissões a pagar", value: formatBRL(data?.pendingCommissions), icon: Wallet },
+  ];
 
   return (
-    <main className="min-h-screen bg-secondary/30">
-      <header className="border-b border-border bg-card">
-        <div className="section-shell flex h-16 items-center justify-between">
-          <span className="flex items-center gap-2 font-semibold">
-            <Building2 className="size-5 text-primary" />
-            {companyName ?? "Painel da empresa"}
-          </span>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={async () => {
-              await signOut();
-              navigate({ to: "/login", replace: true });
-            }}
-          >
-            <LogOut className="size-4" /> Sair
-          </Button>
-        </div>
-      </header>
-
-      <div className="section-shell py-12">
-        <h1 className="text-2xl font-semibold">Bem-vindo ao seu painel</h1>
-        <p className="mt-2 max-w-xl text-sm text-muted-foreground">
-          Aqui você vai gerenciar campanhas, indicadores, indicações e comissões da sua empresa.
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-2xl font-semibold">Início</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Visão geral do seu programa de indicações.
         </p>
       </div>
-    </main>
+
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {cards.map(({ label, value, icon: Icon }) => (
+          <Card key={label}>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-muted-foreground">{label}</CardTitle>
+              <Icon className="size-4 text-primary" />
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-semibold">{value}</p>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Funil de indicações</CardTitle>
+        </CardHeader>
+        <CardContent className="grid gap-4 sm:grid-cols-3 lg:grid-cols-5">
+          {(data?.byPhase ?? []).map(({ phase, count }) => (
+            <div key={phase} className="rounded-lg border border-border p-4">
+              <p className="text-xs uppercase tracking-wide text-muted-foreground">
+                {LEAD_PHASE_LABELS[phase]}
+              </p>
+              <p className="mt-1 text-xl font-semibold">{count}</p>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+    </div>
   );
 }

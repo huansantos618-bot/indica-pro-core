@@ -23,6 +23,8 @@ export type Database = {
           description: string | null
           ends_at: string | null
           id: string
+          product: string | null
+          rules: string | null
           starts_at: string | null
           status: Database["public"]["Enums"]["campaign_status"]
           title: string
@@ -36,6 +38,8 @@ export type Database = {
           description?: string | null
           ends_at?: string | null
           id?: string
+          product?: string | null
+          rules?: string | null
           starts_at?: string | null
           status?: Database["public"]["Enums"]["campaign_status"]
           title: string
@@ -49,6 +53,8 @@ export type Database = {
           description?: string | null
           ends_at?: string | null
           id?: string
+          product?: string | null
+          rules?: string | null
           starts_at?: string | null
           status?: Database["public"]["Enums"]["campaign_status"]
           title?: string
