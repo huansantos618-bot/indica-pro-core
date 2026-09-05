@@ -17,6 +17,8 @@ import { Route as AuthenticatedCampaignsRouteImport } from './routes/_authentica
 import { Route as AuthenticatedCommissionsRouteImport } from './routes/_authenticated/commissions'
 import { Route as AuthenticatedIndicatorsRouteImport } from './routes/_authenticated/indicators'
 import { Route as AuthenticatedLeadsRouteImport } from './routes/_authenticated/leads'
+import { Route as AuthenticatedCompanyDashboardRouteImport } from './routes/_authenticated/company.dashboard'
+import { Route as AuthenticatedIndicatorDashboardRouteImport } from './routes/_authenticated/indicator.dashboard'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -58,6 +60,18 @@ const AuthenticatedLeadsRoute = AuthenticatedLeadsRouteImport.update({
   path: '/leads',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedCompanyDashboardRoute =
+  AuthenticatedCompanyDashboardRouteImport.update({
+    id: '/company/dashboard',
+    path: '/company/dashboard',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedIndicatorDashboardRoute =
+  AuthenticatedIndicatorDashboardRouteImport.update({
+    id: '/indicator/dashboard',
+    path: '/indicator/dashboard',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -67,6 +81,8 @@ export interface FileRoutesByFullPath {
   '/commissions': typeof AuthenticatedCommissionsRoute
   '/indicators': typeof AuthenticatedIndicatorsRoute
   '/leads': typeof AuthenticatedLeadsRoute
+  '/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
+  '/indicator/dashboard': typeof AuthenticatedIndicatorDashboardRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -76,6 +92,8 @@ export interface FileRoutesByTo {
   '/commissions': typeof AuthenticatedCommissionsRoute
   '/indicators': typeof AuthenticatedIndicatorsRoute
   '/leads': typeof AuthenticatedLeadsRoute
+  '/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
+  '/indicator/dashboard': typeof AuthenticatedIndicatorDashboardRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -87,6 +105,8 @@ export interface FileRoutesById {
   '/_authenticated/commissions': typeof AuthenticatedCommissionsRoute
   '/_authenticated/indicators': typeof AuthenticatedIndicatorsRoute
   '/_authenticated/leads': typeof AuthenticatedLeadsRoute
+  '/_authenticated/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
+  '/_authenticated/indicator/dashboard': typeof AuthenticatedIndicatorDashboardRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -98,6 +118,8 @@ export interface FileRouteTypes {
     | '/commissions'
     | '/indicators'
     | '/leads'
+    | '/company/dashboard'
+    | '/indicator/dashboard'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -107,6 +129,8 @@ export interface FileRouteTypes {
     | '/commissions'
     | '/indicators'
     | '/leads'
+    | '/company/dashboard'
+    | '/indicator/dashboard'
   id:
     | '__root__'
     | '/'
@@ -117,6 +141,8 @@ export interface FileRouteTypes {
     | '/_authenticated/commissions'
     | '/_authenticated/indicators'
     | '/_authenticated/leads'
+    | '/_authenticated/company/dashboard'
+    | '/_authenticated/indicator/dashboard'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -184,6 +210,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedLeadsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/company/dashboard': {
+      id: '/_authenticated/company/dashboard'
+      path: '/company/dashboard'
+      fullPath: '/company/dashboard'
+      preLoaderRoute: typeof AuthenticatedCompanyDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/indicator/dashboard': {
+      id: '/_authenticated/indicator/dashboard'
+      path: '/indicator/dashboard'
+      fullPath: '/indicator/dashboard'
+      preLoaderRoute: typeof AuthenticatedIndicatorDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -192,6 +232,8 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedCommissionsRoute: typeof AuthenticatedCommissionsRoute
   AuthenticatedIndicatorsRoute: typeof AuthenticatedIndicatorsRoute
   AuthenticatedLeadsRoute: typeof AuthenticatedLeadsRoute
+  AuthenticatedCompanyDashboardRoute: typeof AuthenticatedCompanyDashboardRoute
+  AuthenticatedIndicatorDashboardRoute: typeof AuthenticatedIndicatorDashboardRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -199,6 +241,8 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedCommissionsRoute: AuthenticatedCommissionsRoute,
   AuthenticatedIndicatorsRoute: AuthenticatedIndicatorsRoute,
   AuthenticatedLeadsRoute: AuthenticatedLeadsRoute,
+  AuthenticatedCompanyDashboardRoute: AuthenticatedCompanyDashboardRoute,
+  AuthenticatedIndicatorDashboardRoute: AuthenticatedIndicatorDashboardRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
