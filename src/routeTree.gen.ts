@@ -15,6 +15,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as AuthenticatedCampaignsRouteImport } from './routes/_authenticated/campaigns'
 import { Route as AuthenticatedCommissionsRouteImport } from './routes/_authenticated/commissions'
+import { Route as AuthenticatedCompanyRouteImport } from './routes/_authenticated/company'
 import { Route as AuthenticatedIndicatorsRouteImport } from './routes/_authenticated/indicators'
 import { Route as AuthenticatedLeadsRouteImport } from './routes/_authenticated/leads'
 import { Route as AuthenticatedCompanyDashboardRouteImport } from './routes/_authenticated/company.dashboard'
@@ -50,6 +51,11 @@ const AuthenticatedCommissionsRoute =
     path: '/commissions',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedCompanyRoute = AuthenticatedCompanyRouteImport.update({
+  id: '/company',
+  path: '/company',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedIndicatorsRoute = AuthenticatedIndicatorsRouteImport.update({
   id: '/indicators',
   path: '/indicators',
@@ -62,9 +68,9 @@ const AuthenticatedLeadsRoute = AuthenticatedLeadsRouteImport.update({
 } as any)
 const AuthenticatedCompanyDashboardRoute =
   AuthenticatedCompanyDashboardRouteImport.update({
-    id: '/company/dashboard',
-    path: '/company/dashboard',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    id: '/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => AuthenticatedCompanyRoute,
   } as any)
 const AuthenticatedIndicatorDashboardRoute =
   AuthenticatedIndicatorDashboardRouteImport.update({
@@ -79,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/campaigns': typeof AuthenticatedCampaignsRoute
   '/commissions': typeof AuthenticatedCommissionsRoute
+  '/company': typeof AuthenticatedCompanyRouteWithChildren
   '/indicators': typeof AuthenticatedIndicatorsRoute
   '/leads': typeof AuthenticatedLeadsRoute
   '/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/campaigns': typeof AuthenticatedCampaignsRoute
   '/commissions': typeof AuthenticatedCommissionsRoute
+  '/company': typeof AuthenticatedCompanyRouteWithChildren
   '/indicators': typeof AuthenticatedIndicatorsRoute
   '/leads': typeof AuthenticatedLeadsRoute
   '/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/_authenticated/campaigns': typeof AuthenticatedCampaignsRoute
   '/_authenticated/commissions': typeof AuthenticatedCommissionsRoute
+  '/_authenticated/company': typeof AuthenticatedCompanyRouteWithChildren
   '/_authenticated/indicators': typeof AuthenticatedIndicatorsRoute
   '/_authenticated/leads': typeof AuthenticatedLeadsRoute
   '/_authenticated/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
@@ -116,6 +125,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/campaigns'
     | '/commissions'
+    | '/company'
     | '/indicators'
     | '/leads'
     | '/company/dashboard'
@@ -127,6 +137,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/campaigns'
     | '/commissions'
+    | '/company'
     | '/indicators'
     | '/leads'
     | '/company/dashboard'
@@ -139,6 +150,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/_authenticated/campaigns'
     | '/_authenticated/commissions'
+    | '/_authenticated/company'
     | '/_authenticated/indicators'
     | '/_authenticated/leads'
     | '/_authenticated/company/dashboard'
@@ -196,6 +208,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCommissionsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/company': {
+      id: '/_authenticated/company'
+      path: '/company'
+      fullPath: '/company'
+      preLoaderRoute: typeof AuthenticatedCompanyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/indicators': {
       id: '/_authenticated/indicators'
       path: '/indicators'
@@ -212,10 +231,10 @@ declare module '@tanstack/react-router' {
     }
     '/_authenticated/company/dashboard': {
       id: '/_authenticated/company/dashboard'
-      path: '/company/dashboard'
+      path: '/dashboard'
       fullPath: '/company/dashboard'
       preLoaderRoute: typeof AuthenticatedCompanyDashboardRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      parentRoute: typeof AuthenticatedCompanyRoute
     }
     '/_authenticated/indicator/dashboard': {
       id: '/_authenticated/indicator/dashboard'
@@ -227,21 +246,32 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedCompanyRouteChildren {
+  AuthenticatedCompanyDashboardRoute: typeof AuthenticatedCompanyDashboardRoute
+}
+
+const AuthenticatedCompanyRouteChildren: AuthenticatedCompanyRouteChildren = {
+  AuthenticatedCompanyDashboardRoute: AuthenticatedCompanyDashboardRoute,
+}
+
+const AuthenticatedCompanyRouteWithChildren =
+  AuthenticatedCompanyRoute._addFileChildren(AuthenticatedCompanyRouteChildren)
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedCampaignsRoute: typeof AuthenticatedCampaignsRoute
   AuthenticatedCommissionsRoute: typeof AuthenticatedCommissionsRoute
+  AuthenticatedCompanyRoute: typeof AuthenticatedCompanyRouteWithChildren
   AuthenticatedIndicatorsRoute: typeof AuthenticatedIndicatorsRoute
   AuthenticatedLeadsRoute: typeof AuthenticatedLeadsRoute
-  AuthenticatedCompanyDashboardRoute: typeof AuthenticatedCompanyDashboardRoute
   AuthenticatedIndicatorDashboardRoute: typeof AuthenticatedIndicatorDashboardRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedCampaignsRoute: AuthenticatedCampaignsRoute,
   AuthenticatedCommissionsRoute: AuthenticatedCommissionsRoute,
+  AuthenticatedCompanyRoute: AuthenticatedCompanyRouteWithChildren,
   AuthenticatedIndicatorsRoute: AuthenticatedIndicatorsRoute,
   AuthenticatedLeadsRoute: AuthenticatedLeadsRoute,
-  AuthenticatedCompanyDashboardRoute: AuthenticatedCompanyDashboardRoute,
   AuthenticatedIndicatorDashboardRoute: AuthenticatedIndicatorDashboardRoute,
 }
 
