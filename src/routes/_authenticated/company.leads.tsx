@@ -236,7 +236,7 @@ function LeadDetail({
           <div className="space-y-2">
             <p className="font-medium">Fase atual</p>
             <Select
-              value={lead ? toPhase(lead.status as LeadStatus) : undefined}
+              value={lead ? toPhase(lead.status as LeadStatus) : ""}
               onValueChange={(value) => onChangeStatus(value as CompanyLeadPhase)}
             >
               <SelectTrigger>
