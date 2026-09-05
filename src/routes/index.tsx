@@ -1,24 +1,38 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "IndicaPro — Programas de indicação para empresas" },
+      {
+        name: "description",
+        content:
+          "Plataforma para empresas criarem campanhas de indicação, acompanharem leads e pagarem comissões aos seus indicadores.",
+      },
+      { property: "og:title", content: "IndicaPro — Programas de indicação para empresas" },
+      {
+        property: "og:description",
+        content:
+          "Plataforma para empresas criarem campanhas de indicação, acompanharem leads e pagarem comissões aos seus indicadores.",
+      },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background px-6 text-center">
+      <h1 className="text-3xl font-semibold tracking-tight text-foreground">IndicaPro</h1>
+      <p className="max-w-md text-sm text-muted-foreground">
+        Base do projeto pronta: banco de dados, papéis de acesso e rotas configurados.
+      </p>
+      <Link
+        to="/auth"
+        className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+      >
+        Entrar
+      </Link>
+    </main>
   );
 }
