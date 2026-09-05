@@ -16,6 +16,7 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as AuthenticatedCampaignsRouteImport } from './routes/_authenticated/campaigns'
 import { Route as AuthenticatedCommissionsRouteImport } from './routes/_authenticated/commissions'
 import { Route as AuthenticatedCompanyRouteImport } from './routes/_authenticated/company'
+import { Route as AuthenticatedIndicatorRouteImport } from './routes/_authenticated/indicator'
 import { Route as AuthenticatedIndicatorsRouteImport } from './routes/_authenticated/indicators'
 import { Route as AuthenticatedLeadsRouteImport } from './routes/_authenticated/leads'
 import { Route as AuthenticatedCompanyCampaignsRouteImport } from './routes/_authenticated/company.campaigns'
@@ -24,6 +25,9 @@ import { Route as AuthenticatedCompanyFinanceRouteImport } from './routes/_authe
 import { Route as AuthenticatedCompanyLeadsRouteImport } from './routes/_authenticated/company.leads'
 import { Route as AuthenticatedCompanySettingsRouteImport } from './routes/_authenticated/company.settings'
 import { Route as AuthenticatedIndicatorDashboardRouteImport } from './routes/_authenticated/indicator.dashboard'
+import { Route as AuthenticatedIndicatorExploreRouteImport } from './routes/_authenticated/indicator.explore'
+import { Route as AuthenticatedIndicatorLeadsRouteImport } from './routes/_authenticated/indicator.leads'
+import { Route as AuthenticatedIndicatorWalletRouteImport } from './routes/_authenticated/indicator.wallet'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -58,6 +62,11 @@ const AuthenticatedCommissionsRoute =
 const AuthenticatedCompanyRoute = AuthenticatedCompanyRouteImport.update({
   id: '/company',
   path: '/company',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedIndicatorRoute = AuthenticatedIndicatorRouteImport.update({
+  id: '/indicator',
+  path: '/indicator',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedIndicatorsRoute = AuthenticatedIndicatorsRouteImport.update({
@@ -102,9 +111,27 @@ const AuthenticatedCompanySettingsRoute =
   } as any)
 const AuthenticatedIndicatorDashboardRoute =
   AuthenticatedIndicatorDashboardRouteImport.update({
-    id: '/indicator/dashboard',
-    path: '/indicator/dashboard',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    id: '/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => AuthenticatedIndicatorRoute,
+  } as any)
+const AuthenticatedIndicatorExploreRoute =
+  AuthenticatedIndicatorExploreRouteImport.update({
+    id: '/explore',
+    path: '/explore',
+    getParentRoute: () => AuthenticatedIndicatorRoute,
+  } as any)
+const AuthenticatedIndicatorLeadsRoute =
+  AuthenticatedIndicatorLeadsRouteImport.update({
+    id: '/leads',
+    path: '/leads',
+    getParentRoute: () => AuthenticatedIndicatorRoute,
+  } as any)
+const AuthenticatedIndicatorWalletRoute =
+  AuthenticatedIndicatorWalletRouteImport.update({
+    id: '/wallet',
+    path: '/wallet',
+    getParentRoute: () => AuthenticatedIndicatorRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -114,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/campaigns': typeof AuthenticatedCampaignsRoute
   '/commissions': typeof AuthenticatedCommissionsRoute
   '/company': typeof AuthenticatedCompanyRouteWithChildren
+  '/indicator': typeof AuthenticatedIndicatorRouteWithChildren
   '/indicators': typeof AuthenticatedIndicatorsRoute
   '/leads': typeof AuthenticatedLeadsRoute
   '/company/campaigns': typeof AuthenticatedCompanyCampaignsRoute
@@ -122,6 +150,9 @@ export interface FileRoutesByFullPath {
   '/company/leads': typeof AuthenticatedCompanyLeadsRoute
   '/company/settings': typeof AuthenticatedCompanySettingsRoute
   '/indicator/dashboard': typeof AuthenticatedIndicatorDashboardRoute
+  '/indicator/explore': typeof AuthenticatedIndicatorExploreRoute
+  '/indicator/leads': typeof AuthenticatedIndicatorLeadsRoute
+  '/indicator/wallet': typeof AuthenticatedIndicatorWalletRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -130,6 +161,7 @@ export interface FileRoutesByTo {
   '/campaigns': typeof AuthenticatedCampaignsRoute
   '/commissions': typeof AuthenticatedCommissionsRoute
   '/company': typeof AuthenticatedCompanyRouteWithChildren
+  '/indicator': typeof AuthenticatedIndicatorRouteWithChildren
   '/indicators': typeof AuthenticatedIndicatorsRoute
   '/leads': typeof AuthenticatedLeadsRoute
   '/company/campaigns': typeof AuthenticatedCompanyCampaignsRoute
@@ -138,6 +170,9 @@ export interface FileRoutesByTo {
   '/company/leads': typeof AuthenticatedCompanyLeadsRoute
   '/company/settings': typeof AuthenticatedCompanySettingsRoute
   '/indicator/dashboard': typeof AuthenticatedIndicatorDashboardRoute
+  '/indicator/explore': typeof AuthenticatedIndicatorExploreRoute
+  '/indicator/leads': typeof AuthenticatedIndicatorLeadsRoute
+  '/indicator/wallet': typeof AuthenticatedIndicatorWalletRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -148,6 +183,7 @@ export interface FileRoutesById {
   '/_authenticated/campaigns': typeof AuthenticatedCampaignsRoute
   '/_authenticated/commissions': typeof AuthenticatedCommissionsRoute
   '/_authenticated/company': typeof AuthenticatedCompanyRouteWithChildren
+  '/_authenticated/indicator': typeof AuthenticatedIndicatorRouteWithChildren
   '/_authenticated/indicators': typeof AuthenticatedIndicatorsRoute
   '/_authenticated/leads': typeof AuthenticatedLeadsRoute
   '/_authenticated/company/campaigns': typeof AuthenticatedCompanyCampaignsRoute
@@ -156,6 +192,9 @@ export interface FileRoutesById {
   '/_authenticated/company/leads': typeof AuthenticatedCompanyLeadsRoute
   '/_authenticated/company/settings': typeof AuthenticatedCompanySettingsRoute
   '/_authenticated/indicator/dashboard': typeof AuthenticatedIndicatorDashboardRoute
+  '/_authenticated/indicator/explore': typeof AuthenticatedIndicatorExploreRoute
+  '/_authenticated/indicator/leads': typeof AuthenticatedIndicatorLeadsRoute
+  '/_authenticated/indicator/wallet': typeof AuthenticatedIndicatorWalletRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -166,6 +205,7 @@ export interface FileRouteTypes {
     | '/campaigns'
     | '/commissions'
     | '/company'
+    | '/indicator'
     | '/indicators'
     | '/leads'
     | '/company/campaigns'
@@ -174,6 +214,9 @@ export interface FileRouteTypes {
     | '/company/leads'
     | '/company/settings'
     | '/indicator/dashboard'
+    | '/indicator/explore'
+    | '/indicator/leads'
+    | '/indicator/wallet'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -182,6 +225,7 @@ export interface FileRouteTypes {
     | '/campaigns'
     | '/commissions'
     | '/company'
+    | '/indicator'
     | '/indicators'
     | '/leads'
     | '/company/campaigns'
@@ -190,6 +234,9 @@ export interface FileRouteTypes {
     | '/company/leads'
     | '/company/settings'
     | '/indicator/dashboard'
+    | '/indicator/explore'
+    | '/indicator/leads'
+    | '/indicator/wallet'
   id:
     | '__root__'
     | '/'
@@ -199,6 +246,7 @@ export interface FileRouteTypes {
     | '/_authenticated/campaigns'
     | '/_authenticated/commissions'
     | '/_authenticated/company'
+    | '/_authenticated/indicator'
     | '/_authenticated/indicators'
     | '/_authenticated/leads'
     | '/_authenticated/company/campaigns'
@@ -207,6 +255,9 @@ export interface FileRouteTypes {
     | '/_authenticated/company/leads'
     | '/_authenticated/company/settings'
     | '/_authenticated/indicator/dashboard'
+    | '/_authenticated/indicator/explore'
+    | '/_authenticated/indicator/leads'
+    | '/_authenticated/indicator/wallet'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -267,6 +318,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCompanyRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/indicator': {
+      id: '/_authenticated/indicator'
+      path: '/indicator'
+      fullPath: '/indicator'
+      preLoaderRoute: typeof AuthenticatedIndicatorRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/indicators': {
       id: '/_authenticated/indicators'
       path: '/indicators'
@@ -318,10 +376,31 @@ declare module '@tanstack/react-router' {
     }
     '/_authenticated/indicator/dashboard': {
       id: '/_authenticated/indicator/dashboard'
-      path: '/indicator/dashboard'
+      path: '/dashboard'
       fullPath: '/indicator/dashboard'
       preLoaderRoute: typeof AuthenticatedIndicatorDashboardRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      parentRoute: typeof AuthenticatedIndicatorRoute
+    }
+    '/_authenticated/indicator/explore': {
+      id: '/_authenticated/indicator/explore'
+      path: '/explore'
+      fullPath: '/indicator/explore'
+      preLoaderRoute: typeof AuthenticatedIndicatorExploreRouteImport
+      parentRoute: typeof AuthenticatedIndicatorRoute
+    }
+    '/_authenticated/indicator/leads': {
+      id: '/_authenticated/indicator/leads'
+      path: '/leads'
+      fullPath: '/indicator/leads'
+      preLoaderRoute: typeof AuthenticatedIndicatorLeadsRouteImport
+      parentRoute: typeof AuthenticatedIndicatorRoute
+    }
+    '/_authenticated/indicator/wallet': {
+      id: '/_authenticated/indicator/wallet'
+      path: '/wallet'
+      fullPath: '/indicator/wallet'
+      preLoaderRoute: typeof AuthenticatedIndicatorWalletRouteImport
+      parentRoute: typeof AuthenticatedIndicatorRoute
     }
   }
 }
@@ -345,22 +424,42 @@ const AuthenticatedCompanyRouteChildren: AuthenticatedCompanyRouteChildren = {
 const AuthenticatedCompanyRouteWithChildren =
   AuthenticatedCompanyRoute._addFileChildren(AuthenticatedCompanyRouteChildren)
 
+interface AuthenticatedIndicatorRouteChildren {
+  AuthenticatedIndicatorDashboardRoute: typeof AuthenticatedIndicatorDashboardRoute
+  AuthenticatedIndicatorExploreRoute: typeof AuthenticatedIndicatorExploreRoute
+  AuthenticatedIndicatorLeadsRoute: typeof AuthenticatedIndicatorLeadsRoute
+  AuthenticatedIndicatorWalletRoute: typeof AuthenticatedIndicatorWalletRoute
+}
+
+const AuthenticatedIndicatorRouteChildren: AuthenticatedIndicatorRouteChildren =
+  {
+    AuthenticatedIndicatorDashboardRoute: AuthenticatedIndicatorDashboardRoute,
+    AuthenticatedIndicatorExploreRoute: AuthenticatedIndicatorExploreRoute,
+    AuthenticatedIndicatorLeadsRoute: AuthenticatedIndicatorLeadsRoute,
+    AuthenticatedIndicatorWalletRoute: AuthenticatedIndicatorWalletRoute,
+  }
+
+const AuthenticatedIndicatorRouteWithChildren =
+  AuthenticatedIndicatorRoute._addFileChildren(
+    AuthenticatedIndicatorRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedCampaignsRoute: typeof AuthenticatedCampaignsRoute
   AuthenticatedCommissionsRoute: typeof AuthenticatedCommissionsRoute
   AuthenticatedCompanyRoute: typeof AuthenticatedCompanyRouteWithChildren
+  AuthenticatedIndicatorRoute: typeof AuthenticatedIndicatorRouteWithChildren
   AuthenticatedIndicatorsRoute: typeof AuthenticatedIndicatorsRoute
   AuthenticatedLeadsRoute: typeof AuthenticatedLeadsRoute
-  AuthenticatedIndicatorDashboardRoute: typeof AuthenticatedIndicatorDashboardRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedCampaignsRoute: AuthenticatedCampaignsRoute,
   AuthenticatedCommissionsRoute: AuthenticatedCommissionsRoute,
   AuthenticatedCompanyRoute: AuthenticatedCompanyRouteWithChildren,
+  AuthenticatedIndicatorRoute: AuthenticatedIndicatorRouteWithChildren,
   AuthenticatedIndicatorsRoute: AuthenticatedIndicatorsRoute,
   AuthenticatedLeadsRoute: AuthenticatedLeadsRoute,
-  AuthenticatedIndicatorDashboardRoute: AuthenticatedIndicatorDashboardRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
