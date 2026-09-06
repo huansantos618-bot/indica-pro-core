@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
-import { formatDate } from "@/lib/company";
+import { formatDateTime } from "@/lib/company";
 
 export const Route = createFileRoute("/_authenticated/admin/companies")({
   head: () => ({
@@ -120,7 +120,7 @@ function AdminCompanies() {
                     </td>
                     <td className="px-4 py-3 text-muted-foreground">{company.cnpj ?? "—"}</td>
                     <td className="px-4 py-3 text-muted-foreground">
-                      {formatDate(company.created_at)}
+                      {formatDateTime(company.created_at)}
                     </td>
                     <td className="px-4 py-3">
                       <Select
