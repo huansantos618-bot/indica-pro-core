@@ -187,45 +187,321 @@ export type Database = {
       }
       companies: {
         Row: {
+          category_business: string | null
+          city: string | null
           cnpj: string | null
+          company_code: string | null
           contact_email: string | null
+          country: string
           created_at: string
+          document_number: string | null
+          document_type: Database["public"]["Enums"]["document_type"] | null
           id: string
           is_active: boolean
           legal_name: string | null
           logo_url: string | null
           name: string
+          owner_id: string | null
           plan: Database["public"]["Enums"]["subscription_plan"]
           slug: string
+          state: string | null
+          subscription_expires_at: string | null
           updated_at: string
         }
         Insert: {
+          category_business?: string | null
+          city?: string | null
           cnpj?: string | null
+          company_code?: string | null
           contact_email?: string | null
+          country?: string
           created_at?: string
+          document_number?: string | null
+          document_type?: Database["public"]["Enums"]["document_type"] | null
           id?: string
           is_active?: boolean
           legal_name?: string | null
           logo_url?: string | null
           name: string
+          owner_id?: string | null
           plan?: Database["public"]["Enums"]["subscription_plan"]
           slug: string
+          state?: string | null
+          subscription_expires_at?: string | null
           updated_at?: string
         }
         Update: {
+          category_business?: string | null
+          city?: string | null
           cnpj?: string | null
+          company_code?: string | null
           contact_email?: string | null
+          country?: string
           created_at?: string
+          document_number?: string | null
+          document_type?: Database["public"]["Enums"]["document_type"] | null
           id?: string
           is_active?: boolean
           legal_name?: string | null
           logo_url?: string | null
           name?: string
+          owner_id?: string | null
           plan?: Database["public"]["Enums"]["subscription_plan"]
           slug?: string
+          state?: string | null
+          subscription_expires_at?: string | null
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "companies_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      company_cash_register: {
+        Row: {
+          company_id: string
+          created_at: string
+          description: string | null
+          id: string
+          payment_method: Database["public"]["Enums"]["payment_method"]
+          sale_date: string
+          total_amount: number
+          updated_at: string
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          payment_method?: Database["public"]["Enums"]["payment_method"]
+          sale_date?: string
+          total_amount?: number
+          updated_at?: string
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          payment_method?: Database["public"]["Enums"]["payment_method"]
+          sale_date?: string
+          total_amount?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_cash_register_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      company_curriculum: {
+        Row: {
+          about_us_text: string | null
+          company_id: string
+          created_at: string
+          founded_year: number | null
+          id: string
+          mission_vision_values: string | null
+          photo_urls: string[]
+          sales_script: string | null
+          support_material_links: string[]
+          training_video_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          about_us_text?: string | null
+          company_id: string
+          created_at?: string
+          founded_year?: number | null
+          id?: string
+          mission_vision_values?: string | null
+          photo_urls?: string[]
+          sales_script?: string | null
+          support_material_links?: string[]
+          training_video_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          about_us_text?: string | null
+          company_id?: string
+          created_at?: string
+          founded_year?: number | null
+          id?: string
+          mission_vision_values?: string | null
+          photo_urls?: string[]
+          sales_script?: string | null
+          support_material_links?: string[]
+          training_video_url?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_curriculum_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: true
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      company_plan_requests: {
+        Row: {
+          amount: number
+          approved_at: string | null
+          company_code: string | null
+          company_id: string
+          created_at: string
+          id: string
+          requested_plan: Database["public"]["Enums"]["subscription_plan"]
+          status: Database["public"]["Enums"]["plan_request_status"]
+          updated_at: string
+        }
+        Insert: {
+          amount?: number
+          approved_at?: string | null
+          company_code?: string | null
+          company_id: string
+          created_at?: string
+          id?: string
+          requested_plan: Database["public"]["Enums"]["subscription_plan"]
+          status?: Database["public"]["Enums"]["plan_request_status"]
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          approved_at?: string | null
+          company_code?: string | null
+          company_id?: string
+          created_at?: string
+          id?: string
+          requested_plan?: Database["public"]["Enums"]["subscription_plan"]
+          status?: Database["public"]["Enums"]["plan_request_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_plan_requests_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      indica_pro_sales: {
+        Row: {
+          commission_amount: number
+          company_id: string
+          created_at: string
+          discount_amount: number
+          gross_amount: number
+          id: string
+          indicator_id: string | null
+          lead_id: string | null
+          product_id: string | null
+          reward_type: Database["public"]["Enums"]["reward_type"]
+          sold_at: string
+        }
+        Insert: {
+          commission_amount?: number
+          company_id: string
+          created_at?: string
+          discount_amount?: number
+          gross_amount?: number
+          id?: string
+          indicator_id?: string | null
+          lead_id?: string | null
+          product_id?: string | null
+          reward_type?: Database["public"]["Enums"]["reward_type"]
+          sold_at?: string
+        }
+        Update: {
+          commission_amount?: number
+          company_id?: string
+          created_at?: string
+          discount_amount?: number
+          gross_amount?: number
+          id?: string
+          indicator_id?: string | null
+          lead_id?: string | null
+          product_id?: string | null
+          reward_type?: Database["public"]["Enums"]["reward_type"]
+          sold_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "indica_pro_sales_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "indica_pro_sales_indicator_id_fkey"
+            columns: ["indicator_id"]
+            isOneToOne: false
+            referencedRelation: "indicators"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "indica_pro_sales_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "indica_pro_sales_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products_campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      indicator_photo_requests: {
+        Row: {
+          created_at: string
+          deadline_at: string
+          id: string
+          indicator_id: string
+          requested_by: string | null
+          resolved_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          deadline_at?: string
+          id?: string
+          indicator_id: string
+          requested_by?: string | null
+          resolved_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          deadline_at?: string
+          id?: string
+          indicator_id?: string
+          requested_by?: string | null
+          resolved_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "indicator_photo_requests_indicator_id_fkey"
+            columns: ["indicator_id"]
+            isOneToOne: false
+            referencedRelation: "indicators"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       indicators: {
         Row: {
@@ -273,6 +549,58 @@ export type Database = {
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inventory_movements: {
+        Row: {
+          company_id: string
+          created_at: string
+          id: string
+          lead_id: string | null
+          product_id: string
+          quantity_delta: number
+          reason: string | null
+        }
+        Insert: {
+          company_id: string
+          created_at?: string
+          id?: string
+          lead_id?: string | null
+          product_id: string
+          quantity_delta: number
+          reason?: string | null
+        }
+        Update: {
+          company_id?: string
+          created_at?: string
+          id?: string
+          lead_id?: string | null
+          product_id?: string
+          quantity_delta?: number
+          reason?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_movements_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_movements_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_movements_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products_campaigns"
             referencedColumns: ["id"]
           },
         ]
@@ -328,6 +656,8 @@ export type Database = {
       leads: {
         Row: {
           campaign_id: string | null
+          client_whatsapp: string | null
+          commission_amount: number
           company_id: string
           created_at: string
           deal_value: number | null
@@ -337,11 +667,15 @@ export type Database = {
           name: string
           notes: string | null
           phone: string | null
+          product_id: string | null
+          reward_given: boolean
           status: Database["public"]["Enums"]["lead_status"]
           updated_at: string
         }
         Insert: {
           campaign_id?: string | null
+          client_whatsapp?: string | null
+          commission_amount?: number
           company_id: string
           created_at?: string
           deal_value?: number | null
@@ -351,11 +685,15 @@ export type Database = {
           name: string
           notes?: string | null
           phone?: string | null
+          product_id?: string | null
+          reward_given?: boolean
           status?: Database["public"]["Enums"]["lead_status"]
           updated_at?: string
         }
         Update: {
           campaign_id?: string | null
+          client_whatsapp?: string | null
+          commission_amount?: number
           company_id?: string
           created_at?: string
           deal_value?: number | null
@@ -365,6 +703,8 @@ export type Database = {
           name?: string
           notes?: string | null
           phone?: string | null
+          product_id?: string | null
+          reward_given?: boolean
           status?: Database["public"]["Enums"]["lead_status"]
           updated_at?: string
         }
@@ -390,6 +730,81 @@ export type Database = {
             referencedRelation: "indicators"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "leads_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products_campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products_campaigns: {
+        Row: {
+          commission_type: Database["public"]["Enums"]["reward_type"]
+          commission_value: number
+          company_id: string
+          created_at: string
+          description: string | null
+          discount_percentage_per_sale: number
+          gallery_urls: string[]
+          id: string
+          image_url: string | null
+          is_active: boolean
+          objections_text: string | null
+          price: number
+          slug: string | null
+          stock_quantity: number
+          title: string
+          training_video_url: string | null
+          updated_at: string
+        }
+        Insert: {
+          commission_type?: Database["public"]["Enums"]["reward_type"]
+          commission_value?: number
+          company_id: string
+          created_at?: string
+          description?: string | null
+          discount_percentage_per_sale?: number
+          gallery_urls?: string[]
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          objections_text?: string | null
+          price?: number
+          slug?: string | null
+          stock_quantity?: number
+          title: string
+          training_video_url?: string | null
+          updated_at?: string
+        }
+        Update: {
+          commission_type?: Database["public"]["Enums"]["reward_type"]
+          commission_value?: number
+          company_id?: string
+          created_at?: string
+          description?: string | null
+          discount_percentage_per_sale?: number
+          gallery_urls?: string[]
+          id?: string
+          image_url?: string | null
+          is_active?: boolean
+          objections_text?: string | null
+          price?: number
+          slug?: string | null
+          stock_quantity?: number
+          title?: string
+          training_video_url?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_campaigns_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
         ]
       }
       profiles: {
@@ -401,7 +816,11 @@ export type Database = {
           full_name: string | null
           id: string
           phone: string | null
+          rejection_reason: string | null
+          role: Database["public"]["Enums"]["app_role"] | null
+          status: Database["public"]["Enums"]["profile_status"]
           updated_at: string
+          user_id: string | null
         }
         Insert: {
           avatar_url?: string | null
@@ -411,7 +830,11 @@ export type Database = {
           full_name?: string | null
           id: string
           phone?: string | null
+          rejection_reason?: string | null
+          role?: Database["public"]["Enums"]["app_role"] | null
+          status?: Database["public"]["Enums"]["profile_status"]
           updated_at?: string
+          user_id?: string | null
         }
         Update: {
           avatar_url?: string | null
@@ -421,7 +844,11 @@ export type Database = {
           full_name?: string | null
           id?: string
           phone?: string | null
+          rejection_reason?: string | null
+          role?: Database["public"]["Enums"]["app_role"] | null
+          status?: Database["public"]["Enums"]["profile_status"]
           updated_at?: string
+          user_id?: string | null
         }
         Relationships: [
           {
@@ -432,6 +859,92 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      remarketing_leads: {
+        Row: {
+          client_name: string
+          client_whatsapp: string
+          company_id: string
+          created_at: string
+          id: string
+          indicator_id: string | null
+          lead_id: string | null
+          product_id: string | null
+        }
+        Insert: {
+          client_name: string
+          client_whatsapp: string
+          company_id: string
+          created_at?: string
+          id?: string
+          indicator_id?: string | null
+          lead_id?: string | null
+          product_id?: string | null
+        }
+        Update: {
+          client_name?: string
+          client_whatsapp?: string
+          company_id?: string
+          created_at?: string
+          id?: string
+          indicator_id?: string | null
+          lead_id?: string | null
+          product_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "remarketing_leads_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "remarketing_leads_indicator_id_fkey"
+            columns: ["indicator_id"]
+            isOneToOne: false
+            referencedRelation: "indicators"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "remarketing_leads_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "remarketing_leads_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products_campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      system_settings: {
+        Row: {
+          admin_pix_key: string | null
+          admin_whatsapp: string | null
+          created_at: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          admin_pix_key?: string | null
+          admin_whatsapp?: string | null
+          created_at?: string
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          admin_pix_key?: string | null
+          admin_whatsapp?: string | null
+          created_at?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       user_roles: {
         Row: {
@@ -471,6 +984,7 @@ export type Database = {
     }
     Functions: {
       current_company_id: { Args: never; Returns: string }
+      generate_company_code: { Args: never; Returns: string }
       generate_indicator_code: { Args: never; Returns: string }
       has_role: {
         Args: {
@@ -499,6 +1013,7 @@ export type Database = {
       campaign_status: "draft" | "active" | "paused" | "archived"
       commission_status: "pending" | "approved" | "paid" | "cancelled"
       commission_type: "fixed" | "percentage"
+      document_type: "CPF" | "CNPJ"
       lead_status:
         | "new"
         | "contacted"
@@ -506,7 +1021,16 @@ export type Database = {
         | "negotiation"
         | "won"
         | "lost"
-      subscription_plan: "free" | "pro" | "enterprise"
+      payment_method:
+        | "dinheiro"
+        | "cartao_credito"
+        | "cartao_debito"
+        | "app_delivery_ifood"
+        | "outro"
+      plan_request_status: "pending" | "approved" | "rejected"
+      profile_status: "pending_approval" | "active" | "paused" | "banned"
+      reward_type: "cash" | "discount" | "free_product"
+      subscription_plan: "free" | "pro" | "enterprise" | "starter"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -638,6 +1162,7 @@ export const Constants = {
       campaign_status: ["draft", "active", "paused", "archived"],
       commission_status: ["pending", "approved", "paid", "cancelled"],
       commission_type: ["fixed", "percentage"],
+      document_type: ["CPF", "CNPJ"],
       lead_status: [
         "new",
         "contacted",
@@ -646,7 +1171,17 @@ export const Constants = {
         "won",
         "lost",
       ],
-      subscription_plan: ["free", "pro", "enterprise"],
+      payment_method: [
+        "dinheiro",
+        "cartao_credito",
+        "cartao_debito",
+        "app_delivery_ifood",
+        "outro",
+      ],
+      plan_request_status: ["pending", "approved", "rejected"],
+      profile_status: ["pending_approval", "active", "paused", "banned"],
+      reward_type: ["cash", "discount", "free_product"],
+      subscription_plan: ["free", "pro", "enterprise", "starter"],
     },
   },
 } as const
