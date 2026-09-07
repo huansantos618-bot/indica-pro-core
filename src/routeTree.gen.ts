@@ -24,6 +24,7 @@ import { Route as AuthenticatedLeadsRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
 import { Route as AuthenticatedAdminCompaniesRouteImport } from './routes/_authenticated/admin.companies'
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
+import { Route as AuthenticatedAdminIndicatorsRouteImport } from './routes/_authenticated/admin.indicators'
 import { Route as AuthenticatedCompanyCampaignsRouteImport } from './routes/_authenticated/company.campaigns'
 import { Route as AuthenticatedCompanyDashboardRouteImport } from './routes/_authenticated/company.dashboard'
 import { Route as AuthenticatedCompanyFinanceRouteImport } from './routes/_authenticated/company.finance'
@@ -111,6 +112,12 @@ const AuthenticatedAdminDashboardRoute =
     path: '/dashboard',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminIndicatorsRoute =
+  AuthenticatedAdminIndicatorsRouteImport.update({
+    id: '/indicators',
+    path: '/indicators',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedCompanyCampaignsRoute =
   AuthenticatedCompanyCampaignsRouteImport.update({
     id: '/campaigns',
@@ -181,6 +188,7 @@ export interface FileRoutesByFullPath {
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/companies': typeof AuthenticatedAdminCompaniesRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/admin/indicators': typeof AuthenticatedAdminIndicatorsRoute
   '/company/campaigns': typeof AuthenticatedCompanyCampaignsRoute
   '/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
   '/company/finance': typeof AuthenticatedCompanyFinanceRoute
@@ -206,6 +214,7 @@ export interface FileRoutesByTo {
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/companies': typeof AuthenticatedAdminCompaniesRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/admin/indicators': typeof AuthenticatedAdminIndicatorsRoute
   '/company/campaigns': typeof AuthenticatedCompanyCampaignsRoute
   '/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
   '/company/finance': typeof AuthenticatedCompanyFinanceRoute
@@ -233,6 +242,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/_authenticated/admin/companies': typeof AuthenticatedAdminCompaniesRoute
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
+  '/_authenticated/admin/indicators': typeof AuthenticatedAdminIndicatorsRoute
   '/_authenticated/company/campaigns': typeof AuthenticatedCompanyCampaignsRoute
   '/_authenticated/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
   '/_authenticated/company/finance': typeof AuthenticatedCompanyFinanceRoute
@@ -260,6 +270,7 @@ export interface FileRouteTypes {
     | '/admin/audit'
     | '/admin/companies'
     | '/admin/dashboard'
+    | '/admin/indicators'
     | '/company/campaigns'
     | '/company/dashboard'
     | '/company/finance'
@@ -285,6 +296,7 @@ export interface FileRouteTypes {
     | '/admin/audit'
     | '/admin/companies'
     | '/admin/dashboard'
+    | '/admin/indicators'
     | '/company/campaigns'
     | '/company/dashboard'
     | '/company/finance'
@@ -311,6 +323,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/audit'
     | '/_authenticated/admin/companies'
     | '/_authenticated/admin/dashboard'
+    | '/_authenticated/admin/indicators'
     | '/_authenticated/company/campaigns'
     | '/_authenticated/company/dashboard'
     | '/_authenticated/company/finance'
@@ -437,6 +450,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminDashboardRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/indicators': {
+      id: '/_authenticated/admin/indicators'
+      path: '/indicators'
+      fullPath: '/admin/indicators'
+      preLoaderRoute: typeof AuthenticatedAdminIndicatorsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/company/campaigns': {
       id: '/_authenticated/company/campaigns'
       path: '/campaigns'
@@ -507,12 +527,14 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
   AuthenticatedAdminCompaniesRoute: typeof AuthenticatedAdminCompaniesRoute
   AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
+  AuthenticatedAdminIndicatorsRoute: typeof AuthenticatedAdminIndicatorsRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
   AuthenticatedAdminCompaniesRoute: AuthenticatedAdminCompaniesRoute,
   AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
+  AuthenticatedAdminIndicatorsRoute: AuthenticatedAdminIndicatorsRoute,
 }
 
 const AuthenticatedAdminRouteWithChildren =
