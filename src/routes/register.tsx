@@ -6,9 +6,19 @@ import { ArrowLeft, Building2, Loader2, MailCheck, UserRound } from "lucide-reac
 
 import { supabase } from "@/integrations/supabase/client";
 import { formatCnpj, formatCpf, onlyDigits, resolveHomePath, type AccountType } from "@/lib/auth";
+import { AvatarCapture } from "@/components/avatar-capture";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { BR_STATES, BUSINESS_CATEGORIES, COUNTRIES, PLANS } from "@/lib/locations";
+import { saveAvatar, storePendingAvatar } from "@/lib/profile";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/register")({
@@ -26,6 +36,8 @@ export const Route = createFileRoute("/register")({
         content:
           "Cadastre a sua empresa para lançar um programa de indicações ou torne-se um indicador e ganhe comissões.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: RegisterPage,
@@ -41,12 +53,18 @@ const companySchema = z.object({
   companyName: z
     .string()
     .trim()
-    .min(2, { message: "Informe a razão social" })
-    .max(120, { message: "Razão social muito longa" }),
-  cnpj: z
+    .min(2, { message: "Informe o nome do negócio" })
+    .max(120, { message: "Nome muito longo" }),
+  documentNumber: z
     .string()
     .transform(onlyDigits)
-    .refine((v) => v.length === 14, { message: "O CNPJ deve ter 14 dígitos" }),
+    .refine((v) => v.length === 11 || v.length === 14, {
+      message: "Informe um CPF (11 dígitos) ou CNPJ (14 dígitos) válido",
+    }),
+  category: z.string().min(2, { message: "Escolha a categoria do negócio" }),
+  country: z.string().min(2, { message: "Escolha o país" }),
+  state: z.string().min(2, { message: "Informe o estado" }),
+  city: z.string().trim().min(2, { message: "Informe a cidade" }).max(80),
 });
 
 const indicatorSchema = z.object({
@@ -56,10 +74,10 @@ const indicatorSchema = z.object({
     .trim()
     .min(2, { message: "Informe o seu nome completo" })
     .max(120, { message: "Nome muito longo" }),
-  cpf: z
+  phone: z
     .string()
     .transform(onlyDigits)
-    .refine((v) => v.length === 11, { message: "O CPF deve ter 11 dígitos" }),
+    .refine((v) => v.length >= 10, { message: "Informe o WhatsApp com DDD" }),
 });
 
 function RegisterPage() {
@@ -70,36 +88,65 @@ function RegisterPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [companyName, setCompanyName] = useState("");
-  const [cnpj, setCnpj] = useState("");
+  const [documentType, setDocumentType] = useState<"CPF" | "CNPJ">("CNPJ");
+  const [documentNumber, setDocumentNumber] = useState("");
+  const [category, setCategory] = useState<string>("");
+  const [country, setCountry] = useState<string>("Brasil");
+  const [state, setState] = useState<string>("");
+  const [city, setCity] = useState("");
+
   const [fullName, setFullName] = useState("");
-  const [cpf, setCpf] = useState("");
+  const [phone, setPhone] = useState("");
+  const [photo, setPhoto] = useState<string | null>(null);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
 
+    if (accountType === "indicator" && !photo) {
+      toast.error("Adicione a sua foto de rosto para concluir o cadastro.");
+      return;
+    }
+
     const parsed =
       accountType === "company"
-        ? companySchema.safeParse({ email, password, companyName, cnpj })
-        : indicatorSchema.safeParse({ email, password, fullName, cpf });
+        ? companySchema.safeParse({
+            email,
+            password,
+            companyName,
+            documentNumber,
+            category,
+            country,
+            state,
+            city,
+          })
+        : indicatorSchema.safeParse({ email, password, fullName, phone });
 
     if (!parsed.success) {
       toast.error(parsed.error.issues[0]?.message ?? "Verifique os dados informados");
       return;
     }
 
+    const digits = onlyDigits(documentNumber);
     const metadata =
       accountType === "company"
         ? {
             account_type: "company",
             company_name: companyName.trim(),
-            cnpj: onlyDigits(cnpj),
+            cnpj: documentType === "CNPJ" ? digits : "",
+            document_type: documentType,
+            document_number: digits,
+            category_business: category,
+            country,
+            state,
+            city: city.trim(),
             full_name: companyName.trim(),
           }
         : {
             account_type: "indicator",
             full_name: fullName.trim(),
-            cpf: onlyDigits(cpf),
+            phone: onlyDigits(phone),
           };
 
     setLoading(true);
@@ -111,14 +158,34 @@ function RegisterPage() {
         data: metadata,
       },
     });
-    setLoading(false);
 
     if (error) {
+      setLoading(false);
       toast.error(
         error.message.includes("already registered")
           ? "Este e-mail já possui uma conta"
           : error.message,
       );
+      return;
+    }
+
+    if (accountType === "indicator" && photo) {
+      if (data.session && data.user) {
+        try {
+          await saveAvatar(data.user.id, photo);
+        } catch {
+          storePendingAvatar(photo);
+        }
+      } else {
+        storePendingAvatar(photo);
+      }
+    }
+
+    setLoading(false);
+
+    if (accountType === "indicator") {
+      toast.success("Cadastro enviado para análise!");
+      navigate({ to: "/pendente", replace: true });
       return;
     }
 
@@ -139,8 +206,8 @@ function RegisterPage() {
           <MailCheck className="mx-auto size-10 text-primary" />
           <h1 className="mt-4 text-2xl font-semibold">Confirme o seu e-mail</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Enviamos um link de confirmação para <strong>{email}</strong>. Depois de confirmar,
-            é só entrar com a sua senha.
+            Enviamos um link de confirmação para <strong>{email}</strong>. Depois de confirmar, é só
+            entrar com a sua senha.
           </p>
           <Button asChild variant="hero" size="lg" className="mt-6 w-full">
             <Link to="/login">Ir para o login</Link>
@@ -170,8 +237,8 @@ function RegisterPage() {
             <AccountOption
               active={accountType === "company"}
               icon={<Building2 className="size-5" />}
-              title="Cadastrar Empresa"
-              description="Crie campanhas e reduza o seu CAC"
+              title="Empresa ou Autônomo"
+              description="Crie campanhas e receba indicações"
               onClick={() => setAccountType("company")}
             />
             <AccountOption
@@ -187,26 +254,132 @@ function RegisterPage() {
             {accountType === "company" ? (
               <>
                 <div className="space-y-2">
-                  <Label htmlFor="companyName">Razão Social</Label>
+                  <Label htmlFor="companyName">Nome do negócio ou do autônomo</Label>
                   <Input
                     id="companyName"
                     value={companyName}
                     maxLength={120}
                     onChange={(e) => setCompanyName(e.target.value)}
-                    placeholder="Minha Empresa LTDA"
+                    placeholder="Padaria Bom Dia"
                     required
                   />
                 </div>
+
                 <div className="space-y-2">
-                  <Label htmlFor="cnpj">CNPJ</Label>
+                  <Label>Tipo de documento</Label>
+                  <div className="flex gap-2">
+                    {(["CPF", "CNPJ"] as const).map((type) => (
+                      <button
+                        key={type}
+                        type="button"
+                        aria-pressed={documentType === type}
+                        onClick={() => {
+                          setDocumentType(type);
+                          setDocumentNumber("");
+                        }}
+                        className={cn(
+                          "flex-1 cursor-pointer rounded-lg border px-4 py-2 text-sm font-medium transition-colors",
+                          documentType === type
+                            ? "border-primary bg-accent/60 text-primary"
+                            : "border-border bg-card hover:border-primary/40",
+                        )}
+                      >
+                        {type}
+                      </button>
+                    ))}
+                  </div>
                   <Input
-                    id="cnpj"
-                    value={cnpj}
+                    id="documentNumber"
+                    value={documentNumber}
                     inputMode="numeric"
-                    onChange={(e) => setCnpj(formatCnpj(e.target.value))}
-                    placeholder="00.000.000/0000-00"
+                    onChange={(e) =>
+                      setDocumentNumber(
+                        documentType === "CPF"
+                          ? formatCpf(e.target.value)
+                          : formatCnpj(e.target.value),
+                      )
+                    }
+                    placeholder={documentType === "CPF" ? "000.000.000-00" : "00.000.000/0000-00"}
                     required
                   />
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Categoria do negócio</Label>
+                  <Select value={category} onValueChange={setCategory}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Escolha o segmento" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {BUSINESS_CATEGORIES.map((item) => (
+                        <SelectItem key={item} value={item}>
+                          {item}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-3">
+                  <div className="space-y-2">
+                    <Label>País</Label>
+                    <Select value={country} onValueChange={setCountry}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {COUNTRIES.map((item) => (
+                          <SelectItem key={item} value={item}>
+                            {item}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Estado</Label>
+                    {country === "Brasil" ? (
+                      <Select value={state} onValueChange={setState}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="UF" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {BR_STATES.map((uf) => (
+                            <SelectItem key={uf} value={uf}>
+                              {uf}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <Input
+                        value={state}
+                        maxLength={60}
+                        onChange={(e) => setState(e.target.value)}
+                        placeholder="Região"
+                      />
+                    )}
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="city">Cidade</Label>
+                    <Input
+                      id="city"
+                      value={city}
+                      maxLength={80}
+                      onChange={(e) => setCity(e.target.value)}
+                      placeholder="São Paulo"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="rounded-xl border border-border bg-secondary/40 p-4 text-sm">
+                  <p className="font-medium">Você começa no {PLANS.free.label}</p>
+                  <p className="mt-1 text-muted-foreground">
+                    1 produto, 1 campanha e até 5 indicadores. Depois de entrar, é só pedir o
+                    aumento de plano em Configurações. Seu código exclusivo (ex.: EMP-5891) é gerado
+                    automaticamente.
+                  </p>
                 </div>
               </>
             ) : (
@@ -223,19 +396,23 @@ function RegisterPage() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="cpf">CPF</Label>
+                  <Label htmlFor="phone">Número do WhatsApp</Label>
                   <Input
-                    id="cpf"
-                    value={cpf}
-                    inputMode="numeric"
-                    onChange={(e) => setCpf(formatCpf(e.target.value))}
-                    placeholder="000.000.000-00"
+                    id="phone"
+                    value={phone}
+                    inputMode="tel"
+                    maxLength={20}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="(11) 90000-0000"
                     required
                   />
-                  <p className="text-xs text-muted-foreground">
-                    Seu código de indicador (ex.: IND-12345) é gerado automaticamente.
-                  </p>
                 </div>
+
+                <AvatarCapture value={photo} onChange={setPhoto} />
+
+                <p className="text-xs text-muted-foreground">
+                  Seu código de indicador (ex.: IND-12345) é gerado automaticamente.
+                </p>
               </>
             )}
 
@@ -270,7 +447,7 @@ function RegisterPage() {
 
             <Button type="submit" variant="hero" size="lg" className="w-full" disabled={loading}>
               {loading ? <Loader2 className="size-4 animate-spin" /> : null}
-              {accountType === "company" ? "Cadastrar empresa" : "Criar conta de indicador"}
+              {accountType === "company" ? "Cadastrar negócio" : "Criar conta de indicador"}
             </Button>
           </form>
 
