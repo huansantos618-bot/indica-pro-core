@@ -26,6 +26,7 @@ import { Route as AuthenticatedAdminCompaniesRouteImport } from './routes/_authe
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
 import { Route as AuthenticatedAdminIndicatorsRouteImport } from './routes/_authenticated/admin.indicators'
 import { Route as AuthenticatedCompanyCampaignsRouteImport } from './routes/_authenticated/company.campaigns'
+import { Route as AuthenticatedCompanyCategoriesRouteImport } from './routes/_authenticated/company.categories'
 import { Route as AuthenticatedCompanyDashboardRouteImport } from './routes/_authenticated/company.dashboard'
 import { Route as AuthenticatedCompanyFinanceRouteImport } from './routes/_authenticated/company.finance'
 import { Route as AuthenticatedCompanyLeadsRouteImport } from './routes/_authenticated/company.leads'
@@ -125,6 +126,12 @@ const AuthenticatedCompanyCampaignsRoute =
     path: '/campaigns',
     getParentRoute: () => AuthenticatedCompanyRoute,
   } as any)
+const AuthenticatedCompanyCategoriesRoute =
+  AuthenticatedCompanyCategoriesRouteImport.update({
+    id: '/categories',
+    path: '/categories',
+    getParentRoute: () => AuthenticatedCompanyRoute,
+  } as any)
 const AuthenticatedCompanyDashboardRoute =
   AuthenticatedCompanyDashboardRouteImport.update({
     id: '/dashboard',
@@ -197,6 +204,7 @@ export interface FileRoutesByFullPath {
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/indicators': typeof AuthenticatedAdminIndicatorsRoute
   '/company/campaigns': typeof AuthenticatedCompanyCampaignsRoute
+  '/company/categories': typeof AuthenticatedCompanyCategoriesRoute
   '/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
   '/company/finance': typeof AuthenticatedCompanyFinanceRoute
   '/company/leads': typeof AuthenticatedCompanyLeadsRoute
@@ -224,6 +232,7 @@ export interface FileRoutesByTo {
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/indicators': typeof AuthenticatedAdminIndicatorsRoute
   '/company/campaigns': typeof AuthenticatedCompanyCampaignsRoute
+  '/company/categories': typeof AuthenticatedCompanyCategoriesRoute
   '/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
   '/company/finance': typeof AuthenticatedCompanyFinanceRoute
   '/company/leads': typeof AuthenticatedCompanyLeadsRoute
@@ -253,6 +262,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/_authenticated/admin/indicators': typeof AuthenticatedAdminIndicatorsRoute
   '/_authenticated/company/campaigns': typeof AuthenticatedCompanyCampaignsRoute
+  '/_authenticated/company/categories': typeof AuthenticatedCompanyCategoriesRoute
   '/_authenticated/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
   '/_authenticated/company/finance': typeof AuthenticatedCompanyFinanceRoute
   '/_authenticated/company/leads': typeof AuthenticatedCompanyLeadsRoute
@@ -282,6 +292,7 @@ export interface FileRouteTypes {
     | '/admin/dashboard'
     | '/admin/indicators'
     | '/company/campaigns'
+    | '/company/categories'
     | '/company/dashboard'
     | '/company/finance'
     | '/company/leads'
@@ -309,6 +320,7 @@ export interface FileRouteTypes {
     | '/admin/dashboard'
     | '/admin/indicators'
     | '/company/campaigns'
+    | '/company/categories'
     | '/company/dashboard'
     | '/company/finance'
     | '/company/leads'
@@ -337,6 +349,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/dashboard'
     | '/_authenticated/admin/indicators'
     | '/_authenticated/company/campaigns'
+    | '/_authenticated/company/categories'
     | '/_authenticated/company/dashboard'
     | '/_authenticated/company/finance'
     | '/_authenticated/company/leads'
@@ -477,6 +490,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCompanyCampaignsRouteImport
       parentRoute: typeof AuthenticatedCompanyRoute
     }
+    '/_authenticated/company/categories': {
+      id: '/_authenticated/company/categories'
+      path: '/categories'
+      fullPath: '/company/categories'
+      preLoaderRoute: typeof AuthenticatedCompanyCategoriesRouteImport
+      parentRoute: typeof AuthenticatedCompanyRoute
+    }
     '/_authenticated/company/dashboard': {
       id: '/_authenticated/company/dashboard'
       path: '/dashboard'
@@ -562,6 +582,7 @@ const AuthenticatedAdminRouteWithChildren =
 
 interface AuthenticatedCompanyRouteChildren {
   AuthenticatedCompanyCampaignsRoute: typeof AuthenticatedCompanyCampaignsRoute
+  AuthenticatedCompanyCategoriesRoute: typeof AuthenticatedCompanyCategoriesRoute
   AuthenticatedCompanyDashboardRoute: typeof AuthenticatedCompanyDashboardRoute
   AuthenticatedCompanyFinanceRoute: typeof AuthenticatedCompanyFinanceRoute
   AuthenticatedCompanyLeadsRoute: typeof AuthenticatedCompanyLeadsRoute
@@ -570,6 +591,7 @@ interface AuthenticatedCompanyRouteChildren {
 
 const AuthenticatedCompanyRouteChildren: AuthenticatedCompanyRouteChildren = {
   AuthenticatedCompanyCampaignsRoute: AuthenticatedCompanyCampaignsRoute,
+  AuthenticatedCompanyCategoriesRoute: AuthenticatedCompanyCategoriesRoute,
   AuthenticatedCompanyDashboardRoute: AuthenticatedCompanyDashboardRoute,
   AuthenticatedCompanyFinanceRoute: AuthenticatedCompanyFinanceRoute,
   AuthenticatedCompanyLeadsRoute: AuthenticatedCompanyLeadsRoute,
