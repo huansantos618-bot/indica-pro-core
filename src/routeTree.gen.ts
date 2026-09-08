@@ -33,6 +33,7 @@ import { Route as AuthenticatedCompanySettingsRouteImport } from './routes/_auth
 import { Route as AuthenticatedIndicatorDashboardRouteImport } from './routes/_authenticated/indicator.dashboard'
 import { Route as AuthenticatedIndicatorExploreRouteImport } from './routes/_authenticated/indicator.explore'
 import { Route as AuthenticatedIndicatorLeadsRouteImport } from './routes/_authenticated/indicator.leads'
+import { Route as AuthenticatedIndicatorVitrineRouteImport } from './routes/_authenticated/indicator.vitrine'
 import { Route as AuthenticatedIndicatorWalletRouteImport } from './routes/_authenticated/indicator.wallet'
 
 const IndexRoute = IndexRouteImport.update({
@@ -166,6 +167,12 @@ const AuthenticatedIndicatorLeadsRoute =
     path: '/leads',
     getParentRoute: () => AuthenticatedIndicatorRoute,
   } as any)
+const AuthenticatedIndicatorVitrineRoute =
+  AuthenticatedIndicatorVitrineRouteImport.update({
+    id: '/vitrine',
+    path: '/vitrine',
+    getParentRoute: () => AuthenticatedIndicatorRoute,
+  } as any)
 const AuthenticatedIndicatorWalletRoute =
   AuthenticatedIndicatorWalletRouteImport.update({
     id: '/wallet',
@@ -197,6 +204,7 @@ export interface FileRoutesByFullPath {
   '/indicator/dashboard': typeof AuthenticatedIndicatorDashboardRoute
   '/indicator/explore': typeof AuthenticatedIndicatorExploreRoute
   '/indicator/leads': typeof AuthenticatedIndicatorLeadsRoute
+  '/indicator/vitrine': typeof AuthenticatedIndicatorVitrineRoute
   '/indicator/wallet': typeof AuthenticatedIndicatorWalletRoute
 }
 export interface FileRoutesByTo {
@@ -223,6 +231,7 @@ export interface FileRoutesByTo {
   '/indicator/dashboard': typeof AuthenticatedIndicatorDashboardRoute
   '/indicator/explore': typeof AuthenticatedIndicatorExploreRoute
   '/indicator/leads': typeof AuthenticatedIndicatorLeadsRoute
+  '/indicator/vitrine': typeof AuthenticatedIndicatorVitrineRoute
   '/indicator/wallet': typeof AuthenticatedIndicatorWalletRoute
 }
 export interface FileRoutesById {
@@ -251,6 +260,7 @@ export interface FileRoutesById {
   '/_authenticated/indicator/dashboard': typeof AuthenticatedIndicatorDashboardRoute
   '/_authenticated/indicator/explore': typeof AuthenticatedIndicatorExploreRoute
   '/_authenticated/indicator/leads': typeof AuthenticatedIndicatorLeadsRoute
+  '/_authenticated/indicator/vitrine': typeof AuthenticatedIndicatorVitrineRoute
   '/_authenticated/indicator/wallet': typeof AuthenticatedIndicatorWalletRoute
 }
 export interface FileRouteTypes {
@@ -279,6 +289,7 @@ export interface FileRouteTypes {
     | '/indicator/dashboard'
     | '/indicator/explore'
     | '/indicator/leads'
+    | '/indicator/vitrine'
     | '/indicator/wallet'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -305,6 +316,7 @@ export interface FileRouteTypes {
     | '/indicator/dashboard'
     | '/indicator/explore'
     | '/indicator/leads'
+    | '/indicator/vitrine'
     | '/indicator/wallet'
   id:
     | '__root__'
@@ -332,6 +344,7 @@ export interface FileRouteTypes {
     | '/_authenticated/indicator/dashboard'
     | '/_authenticated/indicator/explore'
     | '/_authenticated/indicator/leads'
+    | '/_authenticated/indicator/vitrine'
     | '/_authenticated/indicator/wallet'
   fileRoutesById: FileRoutesById
 }
@@ -513,6 +526,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedIndicatorLeadsRouteImport
       parentRoute: typeof AuthenticatedIndicatorRoute
     }
+    '/_authenticated/indicator/vitrine': {
+      id: '/_authenticated/indicator/vitrine'
+      path: '/vitrine'
+      fullPath: '/indicator/vitrine'
+      preLoaderRoute: typeof AuthenticatedIndicatorVitrineRouteImport
+      parentRoute: typeof AuthenticatedIndicatorRoute
+    }
     '/_authenticated/indicator/wallet': {
       id: '/_authenticated/indicator/wallet'
       path: '/wallet'
@@ -563,6 +583,7 @@ interface AuthenticatedIndicatorRouteChildren {
   AuthenticatedIndicatorDashboardRoute: typeof AuthenticatedIndicatorDashboardRoute
   AuthenticatedIndicatorExploreRoute: typeof AuthenticatedIndicatorExploreRoute
   AuthenticatedIndicatorLeadsRoute: typeof AuthenticatedIndicatorLeadsRoute
+  AuthenticatedIndicatorVitrineRoute: typeof AuthenticatedIndicatorVitrineRoute
   AuthenticatedIndicatorWalletRoute: typeof AuthenticatedIndicatorWalletRoute
 }
 
@@ -571,6 +592,7 @@ const AuthenticatedIndicatorRouteChildren: AuthenticatedIndicatorRouteChildren =
     AuthenticatedIndicatorDashboardRoute: AuthenticatedIndicatorDashboardRoute,
     AuthenticatedIndicatorExploreRoute: AuthenticatedIndicatorExploreRoute,
     AuthenticatedIndicatorLeadsRoute: AuthenticatedIndicatorLeadsRoute,
+    AuthenticatedIndicatorVitrineRoute: AuthenticatedIndicatorVitrineRoute,
     AuthenticatedIndicatorWalletRoute: AuthenticatedIndicatorWalletRoute,
   }
 
