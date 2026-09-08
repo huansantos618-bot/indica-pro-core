@@ -156,14 +156,15 @@ function AdminIndicators() {
   }
 
   function confirmBan() {
-    if (!banTarget?.user_id) return;
+    const target = banTarget;
+    const userId = target?.user_id;
+    if (!target || !userId) return;
     if (banReason.trim().length < 5) {
       toast.error("Descreva o motivo do cancelamento.");
       return;
     }
-    const target = banTarget;
     setStatus.mutate(
-      { userId: target.user_id, status: "banned", reason: banReason.trim() },
+      { userId, status: "banned", reason: banReason.trim() },
       {
         onSuccess: () => {
           toast.success("Indicador desativado.");

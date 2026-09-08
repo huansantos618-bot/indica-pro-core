@@ -353,6 +353,35 @@ export type Database = {
           },
         ]
       }
+      company_custom_categories: {
+        Row: {
+          category_name: string
+          company_id: string
+          created_at: string
+          id: string
+        }
+        Insert: {
+          category_name: string
+          company_id: string
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          category_name?: string
+          company_id?: string
+          created_at?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_custom_categories_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       company_plan_requests: {
         Row: {
           amount: number
@@ -753,6 +782,9 @@ export type Database = {
           is_active: boolean
           objections_text: string | null
           price: number
+          product_condition: string
+          reward_description: string | null
+          reward_type: Database["public"]["Enums"]["reward_type"]
           slug: string | null
           stock_quantity: number
           title: string
@@ -772,6 +804,9 @@ export type Database = {
           is_active?: boolean
           objections_text?: string | null
           price?: number
+          product_condition?: string
+          reward_description?: string | null
+          reward_type?: Database["public"]["Enums"]["reward_type"]
           slug?: string | null
           stock_quantity?: number
           title: string
@@ -791,6 +826,9 @@ export type Database = {
           is_active?: boolean
           objections_text?: string | null
           price?: number
+          product_condition?: string
+          reward_description?: string | null
+          reward_type?: Database["public"]["Enums"]["reward_type"]
           slug?: string | null
           stock_quantity?: number
           title?: string
@@ -1029,7 +1067,13 @@ export type Database = {
         | "outro"
       plan_request_status: "pending" | "approved" | "rejected"
       profile_status: "pending_approval" | "active" | "paused" | "banned"
-      reward_type: "cash" | "discount" | "free_product"
+      reward_type:
+        | "cash"
+        | "discount"
+        | "free_product"
+        | "gift"
+        | "store_discount"
+        | "product_discount"
       subscription_plan: "free" | "pro" | "enterprise" | "starter"
     }
     CompositeTypes: {
@@ -1180,7 +1224,14 @@ export const Constants = {
       ],
       plan_request_status: ["pending", "approved", "rejected"],
       profile_status: ["pending_approval", "active", "paused", "banned"],
-      reward_type: ["cash", "discount", "free_product"],
+      reward_type: [
+        "cash",
+        "discount",
+        "free_product",
+        "gift",
+        "store_discount",
+        "product_discount",
+      ],
       subscription_plan: ["free", "pro", "enterprise", "starter"],
     },
   },
