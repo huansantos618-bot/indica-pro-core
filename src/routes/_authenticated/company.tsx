@@ -7,7 +7,11 @@ import {
   LogOut,
   Megaphone,
   Menu,
+  Package,
+  Repeat,
   Settings,
+  ShoppingBag,
+  Tags,
   Users,
   Wallet,
 } from "lucide-react";
@@ -23,8 +27,12 @@ export const Route = createFileRoute("/_authenticated/company")({
 
 const NAV = [
   { to: "/company/dashboard", label: "Início", icon: LayoutDashboard },
+  { to: "/company/products", label: "Produtos", icon: Package },
+  { to: "/company/categories", label: "Minhas categorias", icon: Tags },
   { to: "/company/campaigns", label: "Campanhas", icon: Megaphone },
   { to: "/company/leads", label: "Leads", icon: Users },
+  { to: "/company/cash", label: "Caixa da loja", icon: ShoppingBag },
+  { to: "/company/remarketing", label: "Remarketing", icon: Repeat },
   { to: "/company/finance", label: "Financeiro", icon: Wallet },
   { to: "/company/settings", label: "Configurações", icon: Settings },
 ] as const;
