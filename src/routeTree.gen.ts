@@ -25,6 +25,7 @@ import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminCompaniesRouteImport } from './routes/_authenticated/admin.companies'
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
 import { Route as AuthenticatedAdminIndicatorsRouteImport } from './routes/_authenticated/admin.indicators'
+import { Route as AuthenticatedAdminPlansRouteImport } from './routes/_authenticated/admin.plans'
 import { Route as AuthenticatedCompanyCampaignsRouteImport } from './routes/_authenticated/company.campaigns'
 import { Route as AuthenticatedCompanyCashRouteImport } from './routes/_authenticated/company.cash'
 import { Route as AuthenticatedCompanyCategoriesRouteImport } from './routes/_authenticated/company.categories'
@@ -123,6 +124,11 @@ const AuthenticatedAdminIndicatorsRoute =
     path: '/indicators',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminPlansRoute = AuthenticatedAdminPlansRouteImport.update({
+  id: '/plans',
+  path: '/plans',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 const AuthenticatedCompanyCampaignsRoute =
   AuthenticatedCompanyCampaignsRouteImport.update({
     id: '/campaigns',
@@ -224,6 +230,7 @@ export interface FileRoutesByFullPath {
   '/admin/companies': typeof AuthenticatedAdminCompaniesRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/indicators': typeof AuthenticatedAdminIndicatorsRoute
+  '/admin/plans': typeof AuthenticatedAdminPlansRoute
   '/company/campaigns': typeof AuthenticatedCompanyCampaignsRoute
   '/company/cash': typeof AuthenticatedCompanyCashRoute
   '/company/categories': typeof AuthenticatedCompanyCategoriesRoute
@@ -255,6 +262,7 @@ export interface FileRoutesByTo {
   '/admin/companies': typeof AuthenticatedAdminCompaniesRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/indicators': typeof AuthenticatedAdminIndicatorsRoute
+  '/admin/plans': typeof AuthenticatedAdminPlansRoute
   '/company/campaigns': typeof AuthenticatedCompanyCampaignsRoute
   '/company/cash': typeof AuthenticatedCompanyCashRoute
   '/company/categories': typeof AuthenticatedCompanyCategoriesRoute
@@ -288,6 +296,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/companies': typeof AuthenticatedAdminCompaniesRoute
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/_authenticated/admin/indicators': typeof AuthenticatedAdminIndicatorsRoute
+  '/_authenticated/admin/plans': typeof AuthenticatedAdminPlansRoute
   '/_authenticated/company/campaigns': typeof AuthenticatedCompanyCampaignsRoute
   '/_authenticated/company/cash': typeof AuthenticatedCompanyCashRoute
   '/_authenticated/company/categories': typeof AuthenticatedCompanyCategoriesRoute
@@ -321,6 +330,7 @@ export interface FileRouteTypes {
     | '/admin/companies'
     | '/admin/dashboard'
     | '/admin/indicators'
+    | '/admin/plans'
     | '/company/campaigns'
     | '/company/cash'
     | '/company/categories'
@@ -352,6 +362,7 @@ export interface FileRouteTypes {
     | '/admin/companies'
     | '/admin/dashboard'
     | '/admin/indicators'
+    | '/admin/plans'
     | '/company/campaigns'
     | '/company/cash'
     | '/company/categories'
@@ -384,6 +395,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/companies'
     | '/_authenticated/admin/dashboard'
     | '/_authenticated/admin/indicators'
+    | '/_authenticated/admin/plans'
     | '/_authenticated/company/campaigns'
     | '/_authenticated/company/cash'
     | '/_authenticated/company/categories'
@@ -522,6 +534,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndicatorsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/plans': {
+      id: '/_authenticated/admin/plans'
+      path: '/plans'
+      fullPath: '/admin/plans'
+      preLoaderRoute: typeof AuthenticatedAdminPlansRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/company/campaigns': {
       id: '/_authenticated/company/campaigns'
       path: '/campaigns'
@@ -628,6 +647,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminCompaniesRoute: typeof AuthenticatedAdminCompaniesRoute
   AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
   AuthenticatedAdminIndicatorsRoute: typeof AuthenticatedAdminIndicatorsRoute
+  AuthenticatedAdminPlansRoute: typeof AuthenticatedAdminPlansRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
@@ -635,6 +655,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminCompaniesRoute: AuthenticatedAdminCompaniesRoute,
   AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
   AuthenticatedAdminIndicatorsRoute: AuthenticatedAdminIndicatorsRoute,
+  AuthenticatedAdminPlansRoute: AuthenticatedAdminPlansRoute,
 }
 
 const AuthenticatedAdminRouteWithChildren =
