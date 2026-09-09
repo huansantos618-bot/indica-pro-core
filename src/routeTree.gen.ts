@@ -25,12 +25,15 @@ import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminCompaniesRouteImport } from './routes/_authenticated/admin.companies'
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
 import { Route as AuthenticatedAdminIndicatorsRouteImport } from './routes/_authenticated/admin.indicators'
+import { Route as AuthenticatedAdminPlansRouteImport } from './routes/_authenticated/admin.plans'
 import { Route as AuthenticatedCompanyCampaignsRouteImport } from './routes/_authenticated/company.campaigns'
+import { Route as AuthenticatedCompanyCashRouteImport } from './routes/_authenticated/company.cash'
 import { Route as AuthenticatedCompanyCategoriesRouteImport } from './routes/_authenticated/company.categories'
 import { Route as AuthenticatedCompanyDashboardRouteImport } from './routes/_authenticated/company.dashboard'
 import { Route as AuthenticatedCompanyFinanceRouteImport } from './routes/_authenticated/company.finance'
 import { Route as AuthenticatedCompanyLeadsRouteImport } from './routes/_authenticated/company.leads'
 import { Route as AuthenticatedCompanyProductsRouteImport } from './routes/_authenticated/company.products'
+import { Route as AuthenticatedCompanyRemarketingRouteImport } from './routes/_authenticated/company.remarketing'
 import { Route as AuthenticatedCompanySettingsRouteImport } from './routes/_authenticated/company.settings'
 import { Route as AuthenticatedIndicatorDashboardRouteImport } from './routes/_authenticated/indicator.dashboard'
 import { Route as AuthenticatedIndicatorExploreRouteImport } from './routes/_authenticated/indicator.explore'
@@ -121,10 +124,21 @@ const AuthenticatedAdminIndicatorsRoute =
     path: '/indicators',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminPlansRoute = AuthenticatedAdminPlansRouteImport.update({
+  id: '/plans',
+  path: '/plans',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 const AuthenticatedCompanyCampaignsRoute =
   AuthenticatedCompanyCampaignsRouteImport.update({
     id: '/campaigns',
     path: '/campaigns',
+    getParentRoute: () => AuthenticatedCompanyRoute,
+  } as any)
+const AuthenticatedCompanyCashRoute =
+  AuthenticatedCompanyCashRouteImport.update({
+    id: '/cash',
+    path: '/cash',
     getParentRoute: () => AuthenticatedCompanyRoute,
   } as any)
 const AuthenticatedCompanyCategoriesRoute =
@@ -155,6 +169,12 @@ const AuthenticatedCompanyProductsRoute =
   AuthenticatedCompanyProductsRouteImport.update({
     id: '/products',
     path: '/products',
+    getParentRoute: () => AuthenticatedCompanyRoute,
+  } as any)
+const AuthenticatedCompanyRemarketingRoute =
+  AuthenticatedCompanyRemarketingRouteImport.update({
+    id: '/remarketing',
+    path: '/remarketing',
     getParentRoute: () => AuthenticatedCompanyRoute,
   } as any)
 const AuthenticatedCompanySettingsRoute =
@@ -210,12 +230,15 @@ export interface FileRoutesByFullPath {
   '/admin/companies': typeof AuthenticatedAdminCompaniesRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/indicators': typeof AuthenticatedAdminIndicatorsRoute
+  '/admin/plans': typeof AuthenticatedAdminPlansRoute
   '/company/campaigns': typeof AuthenticatedCompanyCampaignsRoute
+  '/company/cash': typeof AuthenticatedCompanyCashRoute
   '/company/categories': typeof AuthenticatedCompanyCategoriesRoute
   '/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
   '/company/finance': typeof AuthenticatedCompanyFinanceRoute
   '/company/leads': typeof AuthenticatedCompanyLeadsRoute
   '/company/products': typeof AuthenticatedCompanyProductsRoute
+  '/company/remarketing': typeof AuthenticatedCompanyRemarketingRoute
   '/company/settings': typeof AuthenticatedCompanySettingsRoute
   '/indicator/dashboard': typeof AuthenticatedIndicatorDashboardRoute
   '/indicator/explore': typeof AuthenticatedIndicatorExploreRoute
@@ -239,12 +262,15 @@ export interface FileRoutesByTo {
   '/admin/companies': typeof AuthenticatedAdminCompaniesRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/admin/indicators': typeof AuthenticatedAdminIndicatorsRoute
+  '/admin/plans': typeof AuthenticatedAdminPlansRoute
   '/company/campaigns': typeof AuthenticatedCompanyCampaignsRoute
+  '/company/cash': typeof AuthenticatedCompanyCashRoute
   '/company/categories': typeof AuthenticatedCompanyCategoriesRoute
   '/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
   '/company/finance': typeof AuthenticatedCompanyFinanceRoute
   '/company/leads': typeof AuthenticatedCompanyLeadsRoute
   '/company/products': typeof AuthenticatedCompanyProductsRoute
+  '/company/remarketing': typeof AuthenticatedCompanyRemarketingRoute
   '/company/settings': typeof AuthenticatedCompanySettingsRoute
   '/indicator/dashboard': typeof AuthenticatedIndicatorDashboardRoute
   '/indicator/explore': typeof AuthenticatedIndicatorExploreRoute
@@ -270,12 +296,15 @@ export interface FileRoutesById {
   '/_authenticated/admin/companies': typeof AuthenticatedAdminCompaniesRoute
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
   '/_authenticated/admin/indicators': typeof AuthenticatedAdminIndicatorsRoute
+  '/_authenticated/admin/plans': typeof AuthenticatedAdminPlansRoute
   '/_authenticated/company/campaigns': typeof AuthenticatedCompanyCampaignsRoute
+  '/_authenticated/company/cash': typeof AuthenticatedCompanyCashRoute
   '/_authenticated/company/categories': typeof AuthenticatedCompanyCategoriesRoute
   '/_authenticated/company/dashboard': typeof AuthenticatedCompanyDashboardRoute
   '/_authenticated/company/finance': typeof AuthenticatedCompanyFinanceRoute
   '/_authenticated/company/leads': typeof AuthenticatedCompanyLeadsRoute
   '/_authenticated/company/products': typeof AuthenticatedCompanyProductsRoute
+  '/_authenticated/company/remarketing': typeof AuthenticatedCompanyRemarketingRoute
   '/_authenticated/company/settings': typeof AuthenticatedCompanySettingsRoute
   '/_authenticated/indicator/dashboard': typeof AuthenticatedIndicatorDashboardRoute
   '/_authenticated/indicator/explore': typeof AuthenticatedIndicatorExploreRoute
@@ -301,12 +330,15 @@ export interface FileRouteTypes {
     | '/admin/companies'
     | '/admin/dashboard'
     | '/admin/indicators'
+    | '/admin/plans'
     | '/company/campaigns'
+    | '/company/cash'
     | '/company/categories'
     | '/company/dashboard'
     | '/company/finance'
     | '/company/leads'
     | '/company/products'
+    | '/company/remarketing'
     | '/company/settings'
     | '/indicator/dashboard'
     | '/indicator/explore'
@@ -330,12 +362,15 @@ export interface FileRouteTypes {
     | '/admin/companies'
     | '/admin/dashboard'
     | '/admin/indicators'
+    | '/admin/plans'
     | '/company/campaigns'
+    | '/company/cash'
     | '/company/categories'
     | '/company/dashboard'
     | '/company/finance'
     | '/company/leads'
     | '/company/products'
+    | '/company/remarketing'
     | '/company/settings'
     | '/indicator/dashboard'
     | '/indicator/explore'
@@ -360,12 +395,15 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/companies'
     | '/_authenticated/admin/dashboard'
     | '/_authenticated/admin/indicators'
+    | '/_authenticated/admin/plans'
     | '/_authenticated/company/campaigns'
+    | '/_authenticated/company/cash'
     | '/_authenticated/company/categories'
     | '/_authenticated/company/dashboard'
     | '/_authenticated/company/finance'
     | '/_authenticated/company/leads'
     | '/_authenticated/company/products'
+    | '/_authenticated/company/remarketing'
     | '/_authenticated/company/settings'
     | '/_authenticated/indicator/dashboard'
     | '/_authenticated/indicator/explore'
@@ -496,11 +534,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndicatorsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/plans': {
+      id: '/_authenticated/admin/plans'
+      path: '/plans'
+      fullPath: '/admin/plans'
+      preLoaderRoute: typeof AuthenticatedAdminPlansRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/company/campaigns': {
       id: '/_authenticated/company/campaigns'
       path: '/campaigns'
       fullPath: '/company/campaigns'
       preLoaderRoute: typeof AuthenticatedCompanyCampaignsRouteImport
+      parentRoute: typeof AuthenticatedCompanyRoute
+    }
+    '/_authenticated/company/cash': {
+      id: '/_authenticated/company/cash'
+      path: '/cash'
+      fullPath: '/company/cash'
+      preLoaderRoute: typeof AuthenticatedCompanyCashRouteImport
       parentRoute: typeof AuthenticatedCompanyRoute
     }
     '/_authenticated/company/categories': {
@@ -536,6 +588,13 @@ declare module '@tanstack/react-router' {
       path: '/products'
       fullPath: '/company/products'
       preLoaderRoute: typeof AuthenticatedCompanyProductsRouteImport
+      parentRoute: typeof AuthenticatedCompanyRoute
+    }
+    '/_authenticated/company/remarketing': {
+      id: '/_authenticated/company/remarketing'
+      path: '/remarketing'
+      fullPath: '/company/remarketing'
+      preLoaderRoute: typeof AuthenticatedCompanyRemarketingRouteImport
       parentRoute: typeof AuthenticatedCompanyRoute
     }
     '/_authenticated/company/settings': {
@@ -588,6 +647,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminCompaniesRoute: typeof AuthenticatedAdminCompaniesRoute
   AuthenticatedAdminDashboardRoute: typeof AuthenticatedAdminDashboardRoute
   AuthenticatedAdminIndicatorsRoute: typeof AuthenticatedAdminIndicatorsRoute
+  AuthenticatedAdminPlansRoute: typeof AuthenticatedAdminPlansRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
@@ -595,6 +655,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminCompaniesRoute: AuthenticatedAdminCompaniesRoute,
   AuthenticatedAdminDashboardRoute: AuthenticatedAdminDashboardRoute,
   AuthenticatedAdminIndicatorsRoute: AuthenticatedAdminIndicatorsRoute,
+  AuthenticatedAdminPlansRoute: AuthenticatedAdminPlansRoute,
 }
 
 const AuthenticatedAdminRouteWithChildren =
@@ -602,21 +663,25 @@ const AuthenticatedAdminRouteWithChildren =
 
 interface AuthenticatedCompanyRouteChildren {
   AuthenticatedCompanyCampaignsRoute: typeof AuthenticatedCompanyCampaignsRoute
+  AuthenticatedCompanyCashRoute: typeof AuthenticatedCompanyCashRoute
   AuthenticatedCompanyCategoriesRoute: typeof AuthenticatedCompanyCategoriesRoute
   AuthenticatedCompanyDashboardRoute: typeof AuthenticatedCompanyDashboardRoute
   AuthenticatedCompanyFinanceRoute: typeof AuthenticatedCompanyFinanceRoute
   AuthenticatedCompanyLeadsRoute: typeof AuthenticatedCompanyLeadsRoute
   AuthenticatedCompanyProductsRoute: typeof AuthenticatedCompanyProductsRoute
+  AuthenticatedCompanyRemarketingRoute: typeof AuthenticatedCompanyRemarketingRoute
   AuthenticatedCompanySettingsRoute: typeof AuthenticatedCompanySettingsRoute
 }
 
 const AuthenticatedCompanyRouteChildren: AuthenticatedCompanyRouteChildren = {
   AuthenticatedCompanyCampaignsRoute: AuthenticatedCompanyCampaignsRoute,
+  AuthenticatedCompanyCashRoute: AuthenticatedCompanyCashRoute,
   AuthenticatedCompanyCategoriesRoute: AuthenticatedCompanyCategoriesRoute,
   AuthenticatedCompanyDashboardRoute: AuthenticatedCompanyDashboardRoute,
   AuthenticatedCompanyFinanceRoute: AuthenticatedCompanyFinanceRoute,
   AuthenticatedCompanyLeadsRoute: AuthenticatedCompanyLeadsRoute,
   AuthenticatedCompanyProductsRoute: AuthenticatedCompanyProductsRoute,
+  AuthenticatedCompanyRemarketingRoute: AuthenticatedCompanyRemarketingRoute,
   AuthenticatedCompanySettingsRoute: AuthenticatedCompanySettingsRoute,
 }
 

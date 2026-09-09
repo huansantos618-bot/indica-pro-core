@@ -1,6 +1,15 @@
 import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Building2, LayoutDashboard, LogOut, Menu, ScrollText, ShieldCheck } from "lucide-react";
+import {
+  Building2,
+  CreditCard,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  ScrollText,
+  ShieldCheck,
+  UsersRound,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { signOut } from "@/lib/auth";
@@ -13,6 +22,8 @@ export const Route = createFileRoute("/_authenticated/admin")({
 const NAV = [
   { to: "/admin/dashboard", label: "Visão geral", icon: LayoutDashboard },
   { to: "/admin/companies", label: "Empresas", icon: Building2 },
+  { to: "/admin/indicators", label: "Indicadores", icon: UsersRound },
+  { to: "/admin/plans", label: "Planos e faturamento", icon: CreditCard },
   { to: "/admin/audit", label: "Auditoria", icon: ScrollText },
 ] as const;
 
