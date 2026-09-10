@@ -65,7 +65,7 @@ function Vitrine() {
 
   function referralLink(item: CatalogItem) {
     const origin = typeof window === "undefined" ? "" : window.location.origin;
-    return `${origin}/?ref=${indicator?.code ?? ""}&prod=${item.id}`;
+    return `${origin}/p/${item.id}?ref=${indicator?.code ?? ""}`;
   }
 
   async function copyLink(item: CatalogItem) {
