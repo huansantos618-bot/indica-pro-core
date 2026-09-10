@@ -21,6 +21,7 @@ import { Route as AuthenticatedCompanyRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedIndicatorRouteImport } from './routes/_authenticated/indicator'
 import { Route as AuthenticatedIndicatorsRouteImport } from './routes/_authenticated/indicators'
 import { Route as AuthenticatedLeadsRouteImport } from './routes/_authenticated/leads'
+import { Route as PProductIdRouteImport } from './routes/p.$productId'
 import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
 import { Route as AuthenticatedAdminCompaniesRouteImport } from './routes/_authenticated/admin.companies'
 import { Route as AuthenticatedAdminDashboardRouteImport } from './routes/_authenticated/admin.dashboard'
@@ -100,6 +101,11 @@ const AuthenticatedLeadsRoute = AuthenticatedLeadsRouteImport.update({
   id: '/leads',
   path: '/leads',
   getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const PProductIdRoute = PProductIdRouteImport.update({
+  id: '/p/$productId',
+  path: '/p/$productId',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
   id: '/audit',
@@ -226,6 +232,7 @@ export interface FileRoutesByFullPath {
   '/indicator': typeof AuthenticatedIndicatorRouteWithChildren
   '/indicators': typeof AuthenticatedIndicatorsRoute
   '/leads': typeof AuthenticatedLeadsRoute
+  '/p/$productId': typeof PProductIdRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/companies': typeof AuthenticatedAdminCompaniesRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
@@ -258,6 +265,7 @@ export interface FileRoutesByTo {
   '/indicator': typeof AuthenticatedIndicatorRouteWithChildren
   '/indicators': typeof AuthenticatedIndicatorsRoute
   '/leads': typeof AuthenticatedLeadsRoute
+  '/p/$productId': typeof PProductIdRoute
   '/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/admin/companies': typeof AuthenticatedAdminCompaniesRoute
   '/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
@@ -292,6 +300,7 @@ export interface FileRoutesById {
   '/_authenticated/indicator': typeof AuthenticatedIndicatorRouteWithChildren
   '/_authenticated/indicators': typeof AuthenticatedIndicatorsRoute
   '/_authenticated/leads': typeof AuthenticatedLeadsRoute
+  '/p/$productId': typeof PProductIdRoute
   '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
   '/_authenticated/admin/companies': typeof AuthenticatedAdminCompaniesRoute
   '/_authenticated/admin/dashboard': typeof AuthenticatedAdminDashboardRoute
@@ -326,6 +335,7 @@ export interface FileRouteTypes {
     | '/indicator'
     | '/indicators'
     | '/leads'
+    | '/p/$productId'
     | '/admin/audit'
     | '/admin/companies'
     | '/admin/dashboard'
@@ -358,6 +368,7 @@ export interface FileRouteTypes {
     | '/indicator'
     | '/indicators'
     | '/leads'
+    | '/p/$productId'
     | '/admin/audit'
     | '/admin/companies'
     | '/admin/dashboard'
@@ -391,6 +402,7 @@ export interface FileRouteTypes {
     | '/_authenticated/indicator'
     | '/_authenticated/indicators'
     | '/_authenticated/leads'
+    | '/p/$productId'
     | '/_authenticated/admin/audit'
     | '/_authenticated/admin/companies'
     | '/_authenticated/admin/dashboard'
@@ -418,6 +430,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   PendenteRoute: typeof PendenteRoute
   RegisterRoute: typeof RegisterRoute
+  PProductIdRoute: typeof PProductIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -505,6 +518,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/leads'
       preLoaderRoute: typeof AuthenticatedLeadsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/p/$productId': {
+      id: '/p/$productId'
+      path: '/p/$productId'
+      fullPath: '/p/$productId'
+      preLoaderRoute: typeof PProductIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/admin/audit': {
       id: '/_authenticated/admin/audit'
@@ -739,6 +759,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   PendenteRoute: PendenteRoute,
   RegisterRoute: RegisterRoute,
+  PProductIdRoute: PProductIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

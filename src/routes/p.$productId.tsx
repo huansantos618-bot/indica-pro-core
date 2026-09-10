@@ -14,11 +14,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { formatBRL } from "@/lib/company";
 import { REWARD_LABELS } from "@/lib/catalog";
 
-type Search = { ref?: string };
+type Search = { ref: string | undefined };
 
 export const Route = createFileRoute("/p/$productId")({
   validateSearch: (search: Record<string, unknown>): Search => ({
-    ref: typeof search.ref === "string" ? search.ref : undefined,
+    ref: typeof search["ref"] === "string" ? (search["ref"] as string) : undefined,
   }),
   head: () => ({
     meta: [
