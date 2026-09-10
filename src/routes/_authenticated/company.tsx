@@ -8,6 +8,7 @@ import {
   Megaphone,
   Menu,
   Package,
+  GraduationCap,
   Repeat,
   Settings,
   ShoppingBag,
