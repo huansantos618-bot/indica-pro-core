@@ -8,12 +8,15 @@ Regra: SÓ ACRÉSCIMO. Nunca alterar/remover tabelas ou colunas existentes.
 - Cadastro de indicador com foto obrigatória (câmera ou galeria) + tela de aguardando aprovação
 - Cadastro de empresa com CPF/CNPJ, categoria, localização, código EMP-XXXX e planos
 - Admin: aprovação/moderação de indicadores
+- Empresa: produtos + estoque + recompensas, categorias próprias
+- Empresa: caixa da loja (por forma de pagamento + CSV) e base de remarketing
+- Indicador: vitrine estilo Marketplace com busca e filtros
+- Admin: faturamento SaaS, solicitações de plano, vencimentos e dados de cobrança
+- Menus laterais atualizados com todas as telas
 
 ## Pendente
-- Empresa: currículo/treinamento, produtos + estoque + tipo de recompensa
-- Empresa: caixa da loja, relatórios IndicaPro, base de remarketing
+- Empresa: currículo/treinamento e relatórios IndicaPro
 - Páginas públicas /[empresa]/[produto]?ref=
 - Kanban de leads ligado a vendas/estoque/remarketing
-- Indicador: minhas indicações com ações WhatsApp, carteira, leads capturados
-- Admin: faturamento SaaS, solicitações de plano, vencimentos
+- Indicador: leads capturados e ações WhatsApp na carteira
 - Rankings e filtros avançados
