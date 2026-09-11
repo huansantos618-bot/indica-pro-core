@@ -14,9 +14,10 @@ Regra: SÓ ACRÉSCIMO. Nunca alterar/remover tabelas ou colunas existentes.
 - Admin: faturamento SaaS, solicitações de plano, vencimentos e dados de cobrança
 - Menus laterais atualizados com todas as telas
 
+- Empresa: currículo/treinamento (no menu) e relatórios IndicaPro com ranking
+- Páginas públicas /p/[produto]?ref=
+
 ## Pendente
-- Empresa: currículo/treinamento e relatórios IndicaPro
-- Páginas públicas /[empresa]/[produto]?ref=
 - Kanban de leads ligado a vendas/estoque/remarketing
 - Indicador: leads capturados e ações WhatsApp na carteira
-- Rankings e filtros avançados
+- Filtros avançados na vitrine
