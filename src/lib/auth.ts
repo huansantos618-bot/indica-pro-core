@@ -3,8 +3,11 @@ import type { AppRole } from "@/types/database";
 
 export type AccountType = "company" | "indicator";
 
-export const ROLE_HOME: Record<AppRole, "/company/dashboard" | "/indicator/dashboard"> = {
-  super_admin: "/company/dashboard",
+export const ROLE_HOME: Record<
+  AppRole,
+  "/admin/dashboard" | "/company/dashboard" | "/indicator/dashboard"
+> = {
+  super_admin: "/admin/dashboard",
   company_admin: "/company/dashboard",
   indicator: "/indicator/dashboard",
 };
