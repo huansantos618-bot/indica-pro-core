@@ -36,6 +36,7 @@ import { Route as AuthenticatedCompanyFinanceRouteImport } from './routes/_authe
 import { Route as AuthenticatedCompanyLeadsRouteImport } from './routes/_authenticated/company.leads'
 import { Route as AuthenticatedCompanyProductsRouteImport } from './routes/_authenticated/company.products'
 import { Route as AuthenticatedCompanyRemarketingRouteImport } from './routes/_authenticated/company.remarketing'
+import { Route as AuthenticatedCompanyReportsRouteImport } from './routes/_authenticated/company.reports'
 import { Route as AuthenticatedCompanySettingsRouteImport } from './routes/_authenticated/company.settings'
 import { Route as AuthenticatedIndicatorDashboardRouteImport } from './routes/_authenticated/indicator.dashboard'
 import { Route as AuthenticatedIndicatorExploreRouteImport } from './routes/_authenticated/indicator.explore'
@@ -190,6 +191,12 @@ const AuthenticatedCompanyRemarketingRoute =
     path: '/remarketing',
     getParentRoute: () => AuthenticatedCompanyRoute,
   } as any)
+const AuthenticatedCompanyReportsRoute =
+  AuthenticatedCompanyReportsRouteImport.update({
+    id: '/reports',
+    path: '/reports',
+    getParentRoute: () => AuthenticatedCompanyRoute,
+  } as any)
 const AuthenticatedCompanySettingsRoute =
   AuthenticatedCompanySettingsRouteImport.update({
     id: '/settings',
@@ -254,6 +261,7 @@ export interface FileRoutesByFullPath {
   '/company/leads': typeof AuthenticatedCompanyLeadsRoute
   '/company/products': typeof AuthenticatedCompanyProductsRoute
   '/company/remarketing': typeof AuthenticatedCompanyRemarketingRoute
+  '/company/reports': typeof AuthenticatedCompanyReportsRoute
   '/company/settings': typeof AuthenticatedCompanySettingsRoute
   '/indicator/dashboard': typeof AuthenticatedIndicatorDashboardRoute
   '/indicator/explore': typeof AuthenticatedIndicatorExploreRoute
@@ -288,6 +296,7 @@ export interface FileRoutesByTo {
   '/company/leads': typeof AuthenticatedCompanyLeadsRoute
   '/company/products': typeof AuthenticatedCompanyProductsRoute
   '/company/remarketing': typeof AuthenticatedCompanyRemarketingRoute
+  '/company/reports': typeof AuthenticatedCompanyReportsRoute
   '/company/settings': typeof AuthenticatedCompanySettingsRoute
   '/indicator/dashboard': typeof AuthenticatedIndicatorDashboardRoute
   '/indicator/explore': typeof AuthenticatedIndicatorExploreRoute
@@ -324,6 +333,7 @@ export interface FileRoutesById {
   '/_authenticated/company/leads': typeof AuthenticatedCompanyLeadsRoute
   '/_authenticated/company/products': typeof AuthenticatedCompanyProductsRoute
   '/_authenticated/company/remarketing': typeof AuthenticatedCompanyRemarketingRoute
+  '/_authenticated/company/reports': typeof AuthenticatedCompanyReportsRoute
   '/_authenticated/company/settings': typeof AuthenticatedCompanySettingsRoute
   '/_authenticated/indicator/dashboard': typeof AuthenticatedIndicatorDashboardRoute
   '/_authenticated/indicator/explore': typeof AuthenticatedIndicatorExploreRoute
@@ -360,6 +370,7 @@ export interface FileRouteTypes {
     | '/company/leads'
     | '/company/products'
     | '/company/remarketing'
+    | '/company/reports'
     | '/company/settings'
     | '/indicator/dashboard'
     | '/indicator/explore'
@@ -394,6 +405,7 @@ export interface FileRouteTypes {
     | '/company/leads'
     | '/company/products'
     | '/company/remarketing'
+    | '/company/reports'
     | '/company/settings'
     | '/indicator/dashboard'
     | '/indicator/explore'
@@ -429,6 +441,7 @@ export interface FileRouteTypes {
     | '/_authenticated/company/leads'
     | '/_authenticated/company/products'
     | '/_authenticated/company/remarketing'
+    | '/_authenticated/company/reports'
     | '/_authenticated/company/settings'
     | '/_authenticated/indicator/dashboard'
     | '/_authenticated/indicator/explore'
@@ -637,6 +650,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCompanyRemarketingRouteImport
       parentRoute: typeof AuthenticatedCompanyRoute
     }
+    '/_authenticated/company/reports': {
+      id: '/_authenticated/company/reports'
+      path: '/reports'
+      fullPath: '/company/reports'
+      preLoaderRoute: typeof AuthenticatedCompanyReportsRouteImport
+      parentRoute: typeof AuthenticatedCompanyRoute
+    }
     '/_authenticated/company/settings': {
       id: '/_authenticated/company/settings'
       path: '/settings'
@@ -711,6 +731,7 @@ interface AuthenticatedCompanyRouteChildren {
   AuthenticatedCompanyLeadsRoute: typeof AuthenticatedCompanyLeadsRoute
   AuthenticatedCompanyProductsRoute: typeof AuthenticatedCompanyProductsRoute
   AuthenticatedCompanyRemarketingRoute: typeof AuthenticatedCompanyRemarketingRoute
+  AuthenticatedCompanyReportsRoute: typeof AuthenticatedCompanyReportsRoute
   AuthenticatedCompanySettingsRoute: typeof AuthenticatedCompanySettingsRoute
 }
 
@@ -724,6 +745,7 @@ const AuthenticatedCompanyRouteChildren: AuthenticatedCompanyRouteChildren = {
   AuthenticatedCompanyLeadsRoute: AuthenticatedCompanyLeadsRoute,
   AuthenticatedCompanyProductsRoute: AuthenticatedCompanyProductsRoute,
   AuthenticatedCompanyRemarketingRoute: AuthenticatedCompanyRemarketingRoute,
+  AuthenticatedCompanyReportsRoute: AuthenticatedCompanyReportsRoute,
   AuthenticatedCompanySettingsRoute: AuthenticatedCompanySettingsRoute,
 }
 

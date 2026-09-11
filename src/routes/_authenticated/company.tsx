@@ -2,6 +2,7 @@ import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-rout
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import {
+  BarChart3,
   Building2,
   LayoutDashboard,
   LogOut,
@@ -30,10 +31,12 @@ const NAV = [
   { to: "/company/dashboard", label: "Início", icon: LayoutDashboard },
   { to: "/company/products", label: "Produtos", icon: Package },
   { to: "/company/categories", label: "Minhas categorias", icon: Tags },
+  { to: "/company/curriculum", label: "Currículo e treinamento", icon: GraduationCap },
   { to: "/company/campaigns", label: "Campanhas", icon: Megaphone },
   { to: "/company/leads", label: "Leads", icon: Users },
   { to: "/company/cash", label: "Caixa da loja", icon: ShoppingBag },
   { to: "/company/remarketing", label: "Remarketing", icon: Repeat },
+  { to: "/company/reports", label: "Relatórios", icon: BarChart3 },
   { to: "/company/finance", label: "Financeiro", icon: Wallet },
   { to: "/company/settings", label: "Configurações", icon: Settings },
 ] as const;
