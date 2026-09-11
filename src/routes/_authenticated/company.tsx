@@ -30,6 +30,7 @@ const NAV = [
   { to: "/company/dashboard", label: "Início", icon: LayoutDashboard },
   { to: "/company/products", label: "Produtos", icon: Package },
   { to: "/company/categories", label: "Minhas categorias", icon: Tags },
+  { to: "/company/curriculum", label: "Currículo e treinamento", icon: GraduationCap },
   { to: "/company/campaigns", label: "Campanhas", icon: Megaphone },
   { to: "/company/leads", label: "Leads", icon: Users },
   { to: "/company/cash", label: "Caixa da loja", icon: ShoppingBag },
