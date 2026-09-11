@@ -2,6 +2,7 @@ import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-rout
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import {
+  BarChart3,
   Building2,
   LayoutDashboard,
   LogOut,
