@@ -32,7 +32,7 @@ export const Route = createFileRoute("/_authenticated/company/reports")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  component: CompanyReports;
+  component: CompanyReports,
 });
 
 type LeadRow = {
