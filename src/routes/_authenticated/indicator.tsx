@@ -1,4 +1,4 @@
-import { createFileRoute, Link, Outlet, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import {
@@ -32,6 +32,7 @@ const NAV = [
 
 function IndicatorLayout() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const { data: indicator } = useQuery({
     queryKey: indicatorQueryKey,
@@ -93,7 +94,12 @@ function IndicatorLayout() {
       ) : null}
 
       <div className="flex min-w-0 flex-1 flex-col md:pl-64">
-        <header className="flex min-h-16 flex-wrap items-center gap-3 border-b border-border bg-card px-4 py-3">
+        <header
+          className={cn(
+            "min-h-16 flex-wrap items-center gap-3 border-b border-border bg-card px-4 py-3",
+            location.pathname === "/indicator/vitrine" ? "hidden md:flex" : "flex",
+          )}
+        >
           <Button
             variant="ghost"
             size="sm"
