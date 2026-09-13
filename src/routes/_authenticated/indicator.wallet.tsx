@@ -143,7 +143,7 @@ function WalletPage() {
                 <TableHeader>
                   <TableRow>
                     <TableHead>Cliente</TableHead>
-                    <TableHead>Campanha</TableHead>
+                    <TableHead>Origem</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Data</TableHead>
                     <TableHead className="text-right">Valor</TableHead>
@@ -155,7 +155,7 @@ function WalletPage() {
                       <TableCell className="font-medium">
                         {commission.leads?.name ?? "—"}
                       </TableCell>
-                      <TableCell>{commission.campaigns?.title ?? "—"}</TableCell>
+                      <TableCell>{commission.campaigns?.title ?? "Marketplace"}</TableCell>
                       <TableCell>
                         <Badge variant="outline" className={STATUS_TONE[commission.status]}>
                           {STATUS_LABEL[commission.status]}

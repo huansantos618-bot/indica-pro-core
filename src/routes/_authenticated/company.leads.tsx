@@ -208,7 +208,7 @@ function LeadDetail({
         <DialogHeader>
           <DialogTitle>{lead?.name}</DialogTitle>
           <DialogDescription>
-            {lead?.campaigns?.title ?? "Sem campanha vinculada"} ·{" "}
+            {lead?.campaigns?.title ?? "Marketplace"} ·{" "}
             {lead?.indicators ? `Indicado por ${lead.indicators.full_name}` : "Sem indicador"}
           </DialogDescription>
         </DialogHeader>
