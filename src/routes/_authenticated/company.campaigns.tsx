@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { Plus } from "lucide-react";
@@ -30,6 +30,9 @@ import { companyQueryKey, fetchMyCompany, formatBRL, formatDateTime } from "@/li
 import type { Campaign, CampaignStatus } from "@/types/database";
 
 export const Route = createFileRoute("/_authenticated/company/campaigns")({
+  beforeLoad: () => {
+    throw redirect({ to: "/company/products", replace: true });
+  },
   head: () => ({
     meta: [
       { title: "Campanhas — IndicaPro" },

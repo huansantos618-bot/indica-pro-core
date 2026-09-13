@@ -18,12 +18,12 @@ import { whatsappLink } from "@/lib/locations";
 export const Route = createFileRoute("/_authenticated/indicator/vitrine")({
   head: () => ({
     meta: [
-      { title: "Vitrine de produtos — IndicaPro" },
+      { title: "Marketplace — IndicaPro" },
       {
         name: "description",
         content: "Busque produtos por cidade e categoria, veja a recompensa e gere seu link de indicação.",
       },
-      { property: "og:title", content: "Vitrine de produtos — IndicaPro" },
+      { property: "og:title", content: "Marketplace — IndicaPro" },
       {
         property: "og:description",
         content: "Busque produtos por cidade e categoria, veja a recompensa e gere seu link de indicação.",
@@ -160,7 +160,7 @@ function Vitrine() {
       <div className="grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3">
         <div className="min-w-0">
           <h1 className="truncate text-xl font-semibold text-ink">Marketplace</h1>
-          <p className="text-xs text-muted-foreground">Oportunidades para você indicar</p>
+          <p className="text-xs text-muted-foreground">Produtos publicados por empresas para você indicar</p>
         </div>
         <Select value={category} onValueChange={setCategory}>
           <SelectTrigger className="h-8 w-28 shrink-0 rounded-full text-xs sm:w-44">

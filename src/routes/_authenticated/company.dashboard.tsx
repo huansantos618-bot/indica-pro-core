@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Megaphone, Users, Wallet, TrendingUp } from "lucide-react";
+import { Store, Users, Wallet, TrendingUp } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -18,12 +18,12 @@ export const Route = createFileRoute("/_authenticated/company/dashboard")({
       { title: "Painel da empresa — IndicaPro" },
       {
         name: "description",
-        content: "Acompanhe campanhas, indicações e comissões do seu programa de indicação.",
+        content: "Acompanhe produtos publicados, indicações e comissões do seu Marketplace.",
       },
       { property: "og:title", content: "Painel da empresa — IndicaPro" },
       {
         property: "og:description",
-        content: "Acompanhe campanhas, indicações e comissões do seu programa de indicação.",
+        content: "Acompanhe produtos publicados, indicações e comissões do seu Marketplace.",
       },
     ],
   }),
@@ -31,8 +31,8 @@ export const Route = createFileRoute("/_authenticated/company/dashboard")({
 });
 
 async function fetchOverview() {
-  const [campaigns, leads, commissions] = await Promise.all([
-    supabase.from("campaigns").select("id,status"),
+  const [products, leads, commissions] = await Promise.all([
+    supabase.from("products_campaigns").select("id,is_active"),
     supabase.from("leads").select("id,status,deal_value"),
     supabase.from("commissions").select("amount,status"),
   ]);
@@ -44,7 +44,7 @@ async function fetchOverview() {
   }));
 
   return {
-    activeCampaigns: (campaigns.data ?? []).filter((c) => c.status === "active").length,
+    activeProducts: (products.data ?? []).filter((product) => product.is_active).length,
     totalLeads: leadRows.length,
     wonValue: leadRows
       .filter((l) => l.status === "won")
@@ -60,7 +60,7 @@ function CompanyDashboard() {
   const { data } = useQuery({ queryKey: ["company-overview"], queryFn: fetchOverview });
 
   const cards = [
-    { label: "Campanhas ativas", value: String(data?.activeCampaigns ?? 0), icon: Megaphone },
+    { label: "Produtos publicados", value: String(data?.activeProducts ?? 0), icon: Store },
     { label: "Leads recebidos", value: String(data?.totalLeads ?? 0), icon: Users },
     { label: "Vendas validadas", value: formatBRL(data?.wonValue), icon: TrendingUp },
     { label: "Comissões a pagar", value: formatBRL(data?.pendingCommissions), icon: Wallet },
@@ -71,7 +71,7 @@ function CompanyDashboard() {
       <div>
         <h1 className="text-2xl font-semibold">Início</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Visão geral do seu programa de indicações.
+          Visão geral dos seus produtos e indicações no Marketplace.
         </p>
       </div>
 

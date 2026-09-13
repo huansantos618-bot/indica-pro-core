@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { CheckCircle2, Compass, Send, Wallet } from "lucide-react";
+import { CheckCircle2, Store, Send, Wallet } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -87,12 +87,12 @@ function IndicatorDashboard() {
             Olá, {indicator?.full_name?.split(" ")[0] ?? "indicador"}!
           </h1>
           <p className="text-sm text-muted-foreground">
-            Divulgue campanhas, envie indicações e acompanhe seus ganhos.
+            Encontre produtos no Marketplace, faça indicações e acompanhe seus ganhos.
           </p>
         </div>
         <Button asChild>
-          <Link to="/indicator/explore">
-            <Compass className="size-4" /> Explorar campanhas
+          <Link to="/indicator/vitrine">
+            <Store className="size-4" /> Abrir Marketplace
           </Link>
         </Button>
       </header>

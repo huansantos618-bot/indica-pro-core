@@ -133,7 +133,7 @@ function IndicatorLeadsPage() {
                   <TableRow>
                     <TableHead>Cliente</TableHead>
                     <TableHead>Empresa</TableHead>
-                    <TableHead>Campanha</TableHead>
+                    <TableHead>Origem</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead>Enviado em</TableHead>
                     <TableHead className="text-right">Ações</TableHead>
@@ -149,7 +149,7 @@ function IndicatorLeadsPage() {
                         </span>
                       </TableCell>
                       <TableCell>{lead.companies?.name ?? "—"}</TableCell>
-                      <TableCell>{lead.campaigns?.title ?? "—"}</TableCell>
+                      <TableCell>{lead.campaigns?.title ?? "Marketplace"}</TableCell>
                       <TableCell>
                         <Badge variant="outline" className={LEAD_PHASE_TONE[toPhase(lead.status)]}>
                           {LEAD_PHASE_LABELS[lead.status]}
