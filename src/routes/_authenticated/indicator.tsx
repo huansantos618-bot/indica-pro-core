@@ -57,7 +57,7 @@ function IndicatorLayout() {
         )}
       >
         <div className="flex h-16 items-center gap-2 border-b border-border px-5">
-          <Compass className="size-5 text-primary" />
+          <Store className="size-5 text-primary" />
           <span className="truncate font-semibold">IndicaPro</span>
         </div>
 

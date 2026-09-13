@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { Copy, Link2, Megaphone, Send } from "lucide-react";
@@ -23,6 +23,9 @@ import { formatBRL } from "@/lib/company";
 import { buildReferralLink, fetchMyIndicator, indicatorQueryKey } from "@/lib/indicator";
 
 export const Route = createFileRoute("/_authenticated/indicator/explore")({
+  beforeLoad: () => {
+    throw redirect({ to: "/indicator/vitrine", replace: true });
+  },
   head: () => ({
     meta: [
       { title: "Explorar campanhas — IndicaPro" },
