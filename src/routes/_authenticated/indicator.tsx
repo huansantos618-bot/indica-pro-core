@@ -2,7 +2,6 @@ import { createFileRoute, Link, Outlet, useLocation, useNavigate } from "@tansta
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import {
-  Compass,
   Copy,
   LayoutDashboard,
   LogOut,
@@ -24,8 +23,7 @@ export const Route = createFileRoute("/_authenticated/indicator")({
 
 const NAV = [
   { to: "/indicator/dashboard", label: "Início", icon: LayoutDashboard },
-  { to: "/indicator/vitrine", label: "Vitrine", icon: Store },
-  { to: "/indicator/explore", label: "Explorar Campanhas", icon: Compass },
+  { to: "/indicator/vitrine", label: "Marketplace", icon: Store },
   { to: "/indicator/leads", label: "Meus Leads", icon: Users },
   { to: "/indicator/wallet", label: "Minha Carteira", icon: Wallet },
 ] as const;

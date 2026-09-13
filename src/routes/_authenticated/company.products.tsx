@@ -24,15 +24,15 @@ import {
 export const Route = createFileRoute("/_authenticated/company/products")({
   head: () => ({
     meta: [
-      { title: "Produtos e recompensas — IndicaPro" },
+      { title: "Meu Marketplace — IndicaPro" },
       {
         name: "description",
-        content: "Cadastre produtos com estoque, condição do item e a recompensa do indicador.",
+        content: "Publique produtos no Marketplace para todos os indicadores do IndicaPro.",
       },
-      { property: "og:title", content: "Produtos e recompensas — IndicaPro" },
+      { property: "og:title", content: "Meu Marketplace — IndicaPro" },
       {
         property: "og:description",
-        content: "Cadastre produtos com estoque, condição do item e a recompensa do indicador.",
+        content: "Publique produtos no Marketplace para todos os indicadores do IndicaPro.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -99,7 +99,7 @@ function CompanyProducts() {
     },
     onSuccess: () => {
       setForm({ ...EMPTY });
-      toast.success("Produto publicado na vitrine.");
+      toast.success("Produto publicado no Marketplace para todos os indicadores.");
       queryClient.invalidateQueries({ queryKey: ["company-products"] });
     },
     onError: () => toast.error("Não foi possível salvar o produto."),
@@ -120,8 +120,11 @@ function CompanyProducts() {
     <div className="space-y-6">
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Produtos</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">Meu Marketplace</h1>
           <p className="mt-1 text-sm text-muted-foreground">
+            Publique produtos para todos os indicadores encontrarem e compartilharem.
+          </p>
+          <p className="mt-1 text-xs text-muted-foreground">
             {activeCount} de {limitLabel(limits.products)} produtos ativos no seu plano.
           </p>
         </div>
@@ -132,7 +135,7 @@ function CompanyProducts() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Novo produto</CardTitle>
+          <CardTitle className="text-base">Publicar no Marketplace</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1.5 sm:col-span-2">
@@ -234,7 +237,7 @@ function CompanyProducts() {
               disabled={!company?.id || reachedLimit || form.title.trim().length < 2 || create.isPending}
               onClick={() => create.mutate()}
             >
-              Publicar produto
+              Publicar no Marketplace
             </Button>
           </div>
         </CardContent>

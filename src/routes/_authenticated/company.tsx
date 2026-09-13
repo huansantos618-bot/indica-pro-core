@@ -6,7 +6,6 @@ import {
   Building2,
   LayoutDashboard,
   LogOut,
-  Megaphone,
   Menu,
   Package,
   GraduationCap,
@@ -29,10 +28,9 @@ export const Route = createFileRoute("/_authenticated/company")({
 
 const NAV = [
   { to: "/company/dashboard", label: "Início", icon: LayoutDashboard },
-  { to: "/company/products", label: "Produtos", icon: Package },
+  { to: "/company/products", label: "Meu Marketplace", icon: Package },
   { to: "/company/categories", label: "Minhas categorias", icon: Tags },
   { to: "/company/curriculum", label: "Currículo e treinamento", icon: GraduationCap },
-  { to: "/company/campaigns", label: "Campanhas", icon: Megaphone },
   { to: "/company/leads", label: "Leads", icon: Users },
   { to: "/company/cash", label: "Caixa da loja", icon: ShoppingBag },
   { to: "/company/remarketing", label: "Remarketing", icon: Repeat },

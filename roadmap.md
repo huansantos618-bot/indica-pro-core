@@ -11,6 +11,7 @@ Regra: SÓ ACRÉSCIMO. Nunca alterar/remover tabelas ou colunas existentes.
 - Empresa: produtos + estoque + recompensas, categorias próprias
 - Empresa: caixa da loja (por forma de pagamento + CSV) e base de remarketing
 - Indicador: vitrine estilo Marketplace com busca e filtros
+- Produtos indicáveis centralizados no Marketplace; campanhas removidas da navegação principal
 - Admin: faturamento SaaS, solicitações de plano, vencimentos e dados de cobrança
 - Menus laterais atualizados com todas as telas
 
